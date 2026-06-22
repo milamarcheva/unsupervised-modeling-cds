@@ -1,0 +1,44 @@
+main() {
+  Execution directory: seg.out
+  Reading examples {
+    sample-data/seg.raw (0 examples so far)
+  }
+  Create phrase index from 2 examples
+  Stats {
+    numExamples = 2
+    numWords = 14
+    numPhrases = 324
+  }
+  Init parameters: random {
+    AParams.output(seg.out/init.params)
+  }
+  Train: stage1
+  Train: stage2 {
+    Iteration 0/5: temperature = 1 {
+      E-step {
+        Example 0/2: train: logZ = NaN, logVZ = NaN, logCZ = NaN, elogZ = NaN, entropy = NaN, objective = NaN, accuracy = NaN
+      }
+      Inference complexity: 27/ << 27~0 >> /27 (2)
+      train: logZ = -3.330, logVZ = -3.559, logCZ = -0.229, elogZ = NaN, entropy = NaN, objective = NaN, accuracy = NaN
+      ... 1 lines omitted ...
+    }
+    Iteration 1/5: temperature = 1 {
+      E-step {
+        Example 0/2: train: logZ = NaN, logVZ = NaN, logCZ = NaN, elogZ = NaN, entropy = NaN, objective = NaN, accuracy = NaN
+      }
+      Inference complexity: 27/ << 27~0 >> /27 (2)
+      train: logZ = -3.060, logVZ = -3.223, logCZ = -0.163, elogZ = NaN, entropy = NaN, objective = NaN, accuracy = 0.091
+      ... 1 lines omitted ...
+    }
+    Iteration 2/5: temperature = 1 {
+      E-step {
+        Example 0/2: train: logZ = NaN, logVZ = NaN, logCZ = NaN, elogZ = NaN, entropy = NaN, objective = NaN, accuracy = NaN
+      }
+      Inference complexity: 27/ << 27~0 >> /27 (2)
+      train: logZ = -2.961, logVZ = -3.060, logCZ = -0.099, elogZ = NaN, entropy = NaN, objective = NaN, accuracy = 0.417
+      ... 1 lines omitted ...
+    }
+    ... 3 lines omitted ...
+  }
+  Execution directory: seg.out
+}

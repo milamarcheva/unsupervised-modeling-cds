@@ -1,0 +1,115 @@
+stats
+	numExamples	3
+	numWords	11
+	numLabels	3
+	numEventTypes	3
+	numFields	1 1 1
+	numFieldValues	[temperature] #value(35..57) | [windSpeed] #value(5..15) | [windDir] @value(2)
+stage1
+stage2
+	iteration	0
+		train
+			logZ	-2.218
+			logVZ	-2.776
+			logCZ	-0.558
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+	iteration	1
+		train
+			logZ	-1.731
+			logVZ	-2.472
+			logCZ	-0.741
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+	iteration	2
+		train
+			logZ	-1.692
+			logVZ	-2.474
+			logCZ	-0.781
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+	iteration	3
+		train
+			logZ	-1.651
+			logVZ	-2.479
+			logCZ	-0.828
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	0.667
+	iteration	4
+		train
+			logZ	-1.584
+			logVZ	-2.342
+			logCZ	-0.758
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	0.667
+	iteration	5
+		train
+			logZ	-1.441
+			logVZ	-2.086
+			logCZ	-0.646
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	1
+	iteration	6
+		train
+			logZ	-1.153
+			logVZ	-1.675
+			logCZ	-0.522
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	1
+	iteration	7
+		train
+			logZ	-0.902
+			logVZ	-1.416
+			logCZ	-0.514
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	1
+	iteration	8
+		train
+			logZ	-0.802
+			logVZ	-1.267
+			logCZ	-0.465
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	1
+	iteration	9
+		train
+			logZ	-0.752
+			logVZ	-1.166
+			logCZ	-0.414
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	1
+	train
+		logZ	-0.752
+		logVZ	-1.166
+		logCZ	-0.414
+		elogZ	NaN
+		entropy	NaN
+		objective	NaN
+		accuracy	1
+	test
+		logZ	NaN
+		logVZ	NaN
+		logCZ	NaN
+		elogZ	NaN
+		entropy	NaN
+		objective	NaN
+		accuracy	NaN

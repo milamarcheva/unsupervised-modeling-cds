@@ -1,0 +1,719 @@
+mr	N
+cromer	N
+has	T
+a	DET
+pencil	N
+
+a	DET
+play	N
+house	N
+that	X
+goes	T
+out	X
+in	P
+the	DET
+backyard	N
+right	X
+near	X
+the	DET
+swingset	N
+
+that	DET
+little	X
+man	N
+goes	T
+in	P
+the	DET
+car	N
+
+it	N
+has	T
+lot	X
+s	DIV
+and	X
+lot	X
+s	DIV
+of	P
+picture	N
+s	DIV
+
+someone	N
+has	T
+a	DET
+cough	N
+
+he	N
+goes	T
+in	P
+the	DET
+box	N
+
+she	N
+does	T
+so	X
+much	X
+better	X
+in	P
+jeans	N
+than	X
+anything	X
+else	X
+
+where	X
+do	AUX
+you	N
+go	V
+when	X
+mommy	N
+goes	T
+to	P
+work	N
+
+does	AUX
+it	N
+hurt	V
+when	X
+the	DET
+soap	N
+goes	T
+in	P
+her	DET
+eye	N
+s	DIV
+
+up	X
+goes	T
+
+watch	V
+here	X
+she	N
+goes	T
+
+lala	N
+does	T
+
+she	N
+has	T
+
+it	N
+has	T
+bump	N
+s	DIV
+in	P
+it	N
+too	X
+
+i	N
+thought	V
+it	N
+was	C
+just	X
+a	DET
+little	X
+piece	P
+of	P
+a	DET
+a	DET
+a	DET
+stub	N
+that	X
+came	V
+up	X
+and	X
+goes	T
+through	X
+the	DET
+hole	N
+and	X
+stay	V
+ed	T
+there	X
+
+yes	X
+he	N
+does	T
+
+after	X
+sarah	N
+has	T
+a	DET
+turn	N
+
+who	N
+has	T
+a	DET
+blue	X
+truck	N
+
+here	X
+he	N
+has	T
+a	DET
+big	X
+white	X
+mustache	N
+
+i	N
+do	V
+n't	X
+she	N
+does	T
+
+to	X
+make	V
+sure	X
+no	X
+one	X
+goes	T
+out	X
+too	X
+far	X
+
+when	X
+fraser	N
+goes	T
+away	X
+
+if	X
+you	N
+keep	V
+every	X
+thing	N
+that	X
+she	N
+has	T
+what	N
+would	X
+she	N
+have	V
+for	P
+
+yes	X
+it	N
+does	T
+
+that	X
+'s	C
+where	X
+it	N
+goes	T
+
+because	X
+i	N
+'m	C
+pretty	X
+sure	X
+it	N
+it	N
+does	T
+much	X
+much	X
+better	X
+job	N
+
+he	N
+has	T
+this	DET
+obsession	N
+lately	X
+with	P
+dog	N
+food	N
+
+who	N
+has	T
+it	N
+
+my	DET
+goodness	N
+he	N
+has	T
+a	X
+lot	X
+of	X
+band_aids	N
+on	X
+does	AUX
+n't	X
+he	N
+
+he	N
+has	T
+big	X
+hand	N
+s	DIV
+does	AUX
+n't	X
+he	N
+
+it	N
+does	T
+
+he	N
+does	T
+
+i	N
+think	V
+that	N
+goes	T
+on	P
+the	DET
+bottom	N
+honey	N
+
+but	X
+this	DET
+dollie	N
+sound	V
+s	T
+as	X
+though	X
+it	N
+has	T
+indigestion	N
+
+uhoh	X
+there	X
+goes	T
+the	DET
+jar	N
+
+so	X
+he	N
+has	T
+a	DET
+problem	N
+right	X
+now	X
+
+she	N
+has	T
+no	X
+more	X
+toy	N
+s	DIV
+
+she	N
+has	V
+egg	N
+s	DIV
+in	P
+front	X
+of	P
+her	DET
+eye	N
+s	DIV
+so	X
+you	N
+ca	AUX
+n't	X
+see	V
+
+it	N
+does	T
+
+this	DET
+dog	N
+has	T
+a	DET
+leash	N
+
+where	X
+do	AUX
+you	N
+think	V
+that	N
+goes	T
+
+he	N
+has	T
+lot	N
+s	DIV
+of	P
+hair	N
+does	AUX
+n't	X
+he	N
+
+sometimes X	
+the	DET
+ice	N
+goes	T
+away	X
+and	X
+turn	V
+s	T
+to	X
+water	N
+it	N
+melt	V
+s	T
+
+i	N
+think	V
+this	N
+goes	T
+on	P
+the	DET
+big	X
+girl	N
+
+he	N	
+ca	AUX
+n't	X
+see	V
+because X	
+he	N
+only	X
+has	T
+one	X
+eye	N
+
+every	X
+time	X
+he	N
+has	T
+a	DET
+day	N
+off	X
+all	X
+you	N
+'re	AUX
+do	V
+ing	ASP
+is	C
+dish	N
+s	DIV
+
+where	X
+do	AUX	
+you	N
+go	V
+when	X
+mommy	N
+goes	T
+to	P
+work	N
+
+well	X
+is	C
+that	N
+the	DET
+way	N
+it	N
+goes	T
+
+who	N	
+has	T
+a	DET
+little	X
+tea	N
+set	N
+like	X
+this	N
+do	AUX
+you	N
+know	V
+
+he	N	
+has	T
+a	DET
+jacket	N
+
+look	V
+how	X
+it	N
+goes	T
+in	P
+the	DET
+red	N
+hole	N
+
+he	N	
+look	V
+s	T
+a	DET
+little	X
+like	X
+a	DET
+bunny	N
+he	N
+has	T
+such	X
+long	X
+ear	N
+s	DIV
+
+the	
+chair	
+that	
+goes	
+with	
+this	
+
+now	
+he	
+has	
+a	
+hurt	
+too	
+
+his	
+head	
+goes	
+up	
+there	
+
+this	
+goes	
+down	
+here	
+
+papa'll	
+fix	
+it	
+when	
+he	
+come	
+s	
+home	
+because	
+he	
+has	
+the	
+clipper	
+s	
+
+it	
+goes	
+over	
+here	
+
+now	
+look	
+at	
+it	
+and	
+see	
+if	
+you	
+can	
+find	
+where	
+it	
+goes	
+
+she	
+does	
+this	
+all	
+the	
+time	
+
+these	
+crazy	
+trick	
+s	
+that	
+he	
+does	
+with	
+her	
+
+the	
+fat	
+one	
+has	
+a	
+yellow	
+hat	
+
+which	
+goes	
+faster	
+
+she	
+has	
+some	
+medicine	
+
+it	
+has	
+a	
+button	
+
+but	
+the	
+part	
+when	
+he	
+goes	
+on	
+tour	
+s	
+i	
+think	
+is	
+interesting	
+
+see	
+she	
+has	
+red	
+shoe	
+s	
+just	
+like	
+you	
+
+well	
+tell	
+me	
+what	
+it	
+does	
+
+every	
+single	
+finger	
+has	
+a	
+spot	
+on	
+it	
+
+lemonade	
+does	
+n't	
+come	
+from	
+a	
+cow	
+
+but	
+it	
+'s	
+something	
+that	
+goes	
+along	
+with	
+the	
+train	
+
+it	
+goes	
+over	
+here	
+
+yeah	
+the	
+horse	
+goes	
+giddyup	
+does	
+n't	
+he	
+
+do	
+you	
+know	
+who	
+else	
+investigator	
+goes	
+and	
+play	
+s	
+with	
+
+he	
+does	
+pretty	
+good	
+sometimes	
+come	
+on	
+
+see	
+all	
+the	
+present	
+s	
+he	
+has	
+
+he	
+has	
+some	
+in	
+the	
+back	
+yard	
+
+it	
+goes	
+right	
+there	
+and	
+that	
+spell	
+s	
+
+she	
+has	
+a	
+purple	
+skirt	
+on	
+does	
+n't	
+she	
+
+but	
+he	
+has	
+something	
+on	
+his	
+head	
+
+goes	
+this	
+way	
+
+he	
+just	
+goes	
+down	
+
+she	
+has	
+bang	
+s	
+does	
+n't	
+she	
+
+oh	
+perhaps	
+an	
+ax	
+goes	
+in	
+
+do	
+you	
+know	
+which	
+letter	
+goes	
+first	
+for	
+your	
+name	
+
+what	
+goes	
+in	
+there

@@ -1,0 +1,23 @@
+numExamples	3
+numWords	11
+numLabels	3
+numEventTypes	3
+numFields	1 1 1
+numFieldValues	[temperature] #value(35..57) | [windSpeed] #value(5..15) | [windDir] @value(2)
+currExample	3
+train.logZ	-0.752
+train.logVZ	-1.166
+train.logCZ	-0.414
+train.elogZ	NaN
+train.entropy	NaN
+train.objective	NaN
+train.accuracy	1
+test.logZ	NaN
+test.logVZ	NaN
+test.logCZ	NaN
+test.elogZ	NaN
+test.entropy	NaN
+test.objective	NaN
+test.accuracy	NaN
+currIter	10
+exec.status	done

@@ -1,0 +1,23 @@
+# === Ignore folders ===
+goldData/
+logs/
+outputs/
+tag.out/
+
+
+# === Ignore Python cache and metadata ===
+__pycache__/
+*.egg-info/
+
+
+# === IntelliJ / JetBrains specific ===
+.idea/
+*.iml
+
+# === System / OS files ===
+Thumbs.db
+.DS_Store
+
+# === If using virtual environments ===
+venv/
+.env/

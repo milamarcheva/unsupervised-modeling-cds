@@ -1,0 +1,3 @@
+.type:temperature	#value:50
+.type:windSpeed	#value:5
+.type:windDir	@value:N

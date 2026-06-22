@@ -1,0 +1,54 @@
+
+
+Weekdays, here, there — distributional analysis — n or X if adverb
+Numbers — distributional analysis  — n (e.g. i need a new ONE N) or X
+
+Determiners — distr analysis — pronoun  —> N or DET
+
+auxiliaries -- not just be verbs; modal verbs and do (e.g. I don’t think it blinks all the time does AUX it; Did AUX you help mummy with the shoes) in question and have (I ‘ve AUX never seen a striped watch) can/should also be an AUX; Could, would, can, have to AUX
+
+
+contractible aux and cop: negatives are normally considered as aux too, but here only the positive examples are counted by brown and thus here
+
+idiomatic expressions -  X
+
+Wh- words: X when they introduce a clause, N when they can be substituted for a noun (what N is your name); DET (what DET animals did you see at the zoo)
+
+where	X	N       => I think Theresa suggested to separate wh words. Here, X; 
+is	C	C
+the	DET	DET
+little	X	X
+man	N	N
+
+
+
+Copula or aux in past tense — still copula or aux
+
+Let’s ’s — us — N
+
+Will — tense even though not incl in brown stages
+
+
+
+Where, when, WHY— X, (adverbs) can they sometimes be N
+
+THAT, WHAT, WHO - N IF APPLICABLE
+
+Existential there - X
+
+IRREGULAR THIRD: HAS, DOES, GOES — AUX OR T? Currently they are T but I think most of the time it should be AUX but then why do we even have that morphemic category?
+
+DID - PAST TENSE OR AUX, currently I am doing AUX
+
+DO - AUX WHEN IN QUESTION
+
+
+she	N
+use	V OR AUX?, V — same as go in going
+ed	T
+to	X
+babysit	V
+for	P
+you	N
+
+

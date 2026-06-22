@@ -1,0 +1,6 @@
+os.system(f"""scala -cp induction.jar induction.Induction -create -modelType hmm
+-Options.K 10 -Options.stage2.numIters 1 -Options.stage2.online True -Options.onlinePerm False
+-Options.stage2.miniBatches True -Options.stage2.miniBatchSize 1 -Options.outputExampleFreq 1 -log.msPerLine 10
+-log.maxIndLevel 100 -inputPaths sample-data/sents_Brown_order.raw -inputFormat raw -Options.inductionType morph
+-Options.diluteValue {dilute_val}
+-execDir outputs/20072023/tag20072023_MorphBrownStages_dilute{dilute_val}_order0.out""")

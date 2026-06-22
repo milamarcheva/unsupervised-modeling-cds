@@ -1,0 +1,3 @@
+sample-data/semantics/3.text:	- Pred:	[TRACK0] temperature is 50 and north wind	temperature:value=50[]	windSpeed:value=5[]	windDir:value=N[]
+sample-data/semantics/1.text:	- Pred:	*[TRACK0] the temperature is 35 and some south wind	temperature:value=35[]	windSpeed:value=15[]	windDir:value=S[]	- True:	[TRACK0] temperature:value=35[the temperature is 35 and some south wind]	[TRACK1] windDir:value=S[the temperature is 35 and some south wind]	Precision = NaN, recall = 0, F1 = NaN (2) (3 possible events)
+sample-data/semantics/2.text:	- Pred:	[TRACK0] the temperature is 55 and some north wind	temperature:value=57[]	windSpeed:value=5[]	windDir:value=N[]

@@ -1,0 +1,67 @@
+stats
+	numExamples	2
+	numWords	14
+	numPhrases	324
+stage1
+stage2
+	iteration	0
+		train
+			logZ	-3.330
+			logVZ	-3.559
+			logCZ	-0.229
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+	iteration	1
+		train
+			logZ	-3.060
+			logVZ	-3.223
+			logCZ	-0.163
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	0.091
+	iteration	2
+		train
+			logZ	-2.961
+			logVZ	-3.060
+			logCZ	-0.099
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	0.417
+	iteration	3
+		train
+			logZ	-2.841
+			logVZ	-2.903
+			logCZ	-0.062
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	0.417
+	iteration	4
+		train
+			logZ	-2.757
+			logVZ	-2.810
+			logCZ	-0.053
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	0.400
+	train
+		logZ	-2.757
+		logVZ	-2.810
+		logCZ	-0.053
+		elogZ	NaN
+		entropy	NaN
+		objective	NaN
+		accuracy	0.400
+	test
+		logZ	NaN
+		logVZ	NaN
+		logCZ	NaN
+		elogZ	NaN
+		entropy	NaN
+		objective	NaN
+		accuracy	NaN

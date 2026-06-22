@@ -1,0 +1,60 @@
+main() {
+  Execution directory: semantics.out
+  Reading examples {
+    sample-data/semantics/1.events (0 examples so far)
+    sample-data/semantics/2.events (1 examples so far)
+    sample-data/semantics/3.events (2 examples so far)
+  }
+  C=1 tracks {
+    Track ALL (3 event types)
+  }
+  Setting up examples
+  Stats {
+    numExamples = 3
+    numWords = 11
+    numLabels = 3
+    numEventTypes = 3
+    numFields = 1 1 1
+    numFieldValues = [temperature] #value(35..57) | [windSpeed] #value(5..15) | [windDir] @value(2)
+  }
+  Init parameters: random {
+    AParams.output(semantics.out/init.params)
+  }
+  Train: stage1
+  Train: stage2 {
+    Iteration 0/10: temperature = 1 {
+      E-step {
+        Example 0/3: train: logZ = NaN, logVZ = NaN, logCZ = NaN, elogZ = NaN, entropy = NaN, objective = NaN, accuracy = NaN
+      }
+      Inference complexity: 517/ << 691.667~123.508 >> /779 (3)
+      train: logZ = -2.218, logVZ = -2.776, logCZ = -0.558, elogZ = NaN, entropy = NaN, objective = NaN, accuracy = NaN
+      ... 1 lines omitted ...
+    }
+    Iteration 1/10: temperature = 1 {
+      E-step {
+        Example 0/3: train: logZ = NaN, logVZ = NaN, logCZ = NaN, elogZ = NaN, entropy = NaN, objective = NaN, accuracy = NaN
+      }
+      Inference complexity: 517/ << 691.667~123.508 >> /779 (3)
+      train: logZ = -1.731, logVZ = -2.472, logCZ = -0.741, elogZ = NaN, entropy = NaN, objective = NaN, accuracy = NaN
+      ... 1 lines omitted ...
+    }
+    Iteration 2/10: temperature = 1 {
+      E-step {
+        Example 0/3: train: logZ = NaN, logVZ = NaN, logCZ = NaN, elogZ = NaN, entropy = NaN, objective = NaN, accuracy = NaN
+      }
+      Inference complexity: 517/ << 691.667~123.508 >> /779 (3)
+      train: logZ = -1.692, logVZ = -2.474, logCZ = -0.781, elogZ = NaN, entropy = NaN, objective = NaN, accuracy = NaN
+      ... 1 lines omitted ...
+    }
+    Iteration 6/10: temperature = 1 {
+      E-step {
+        Example 0/3: train: logZ = NaN, logVZ = NaN, logCZ = NaN, elogZ = NaN, entropy = NaN, objective = NaN, accuracy = NaN
+      }
+      Inference complexity: 517/ << 691.667~123.508 >> /779 (3)
+      train: logZ = -1.153, logVZ = -1.675, logCZ = -0.522, elogZ = NaN, entropy = NaN, objective = NaN, accuracy = 1
+      ... 1 lines omitted ...
+    }
+    ... 7 lines omitted ...
+  } [1.2s, cum. 1.5s]
+  Execution directory: semantics.out
+} [1.5s]

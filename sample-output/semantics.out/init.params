@@ -1,0 +1,224 @@
+trackC .	0.500	0
+trackC *	0.500	0
+eventTypeC [ALL] temperature windDir	0.250	0
+eventTypeC [ALL] temperature windSpeed	0.250	0
+eventTypeC [ALL] temperature temperature	0.250	0
+eventTypeC [ALL] temperature (none)	0.250	0
+eventTypeC [ALL] windSpeed temperature	0.250	0
+eventTypeC [ALL] windSpeed windDir	0.250	0
+eventTypeC [ALL] windSpeed windSpeed	0.250	0
+eventTypeC [ALL] windSpeed (none)	0.250	0
+eventTypeC [ALL] windDir (none)	0.250	0
+eventTypeC [ALL] windDir temperature	0.250	0
+eventTypeC [ALL] windDir windSpeed	0.250	0
+eventTypeC [ALL] windDir windDir	0.250	0
+eventTypeC [ALL] (none) windSpeed	0.250	0
+eventTypeC [ALL] (none) windDir	0.250	0
+eventTypeC [ALL] (none) (none)	0.250	0
+eventTypeC [ALL] (none) temperature	0.250	0
+
+noneEventTypeE [ALL] 35	0.091	0
+noneEventTypeE [ALL] south	0.091	0
+noneEventTypeE [ALL] is	0.091	0
+noneEventTypeE [ALL] 50	0.091	0
+noneEventTypeE [ALL] north	0.091	0
+noneEventTypeE [ALL] some	0.091	0
+noneEventTypeE [ALL] 55	0.091	0
+noneEventTypeE [ALL] the	0.091	0
+noneEventTypeE [ALL] wind	0.091	0
+noneEventTypeE [ALL] temperature	0.091	0
+noneEventTypeE [ALL] and	0.091	0
+
+genericE wind	0.091	0
+genericE temperature	0.091	0
+genericE south	0.091	0
+genericE north	0.091	0
+genericE 55	0.091	0
+genericE 50	0.091	0
+genericE the	0.091	0
+genericE is	0.091	0
+genericE some	0.091	0
+genericE and	0.091	0
+genericE 35	0.091	0
+genericLabelC and	0.333	0
+genericLabelC -	0.333	0
+genericLabelC *	0.333	0
+
+fieldC temperature value value	0.333	0
+fieldC temperature value (boundary)	0.333	0
+fieldC temperature value (none)	0.333	0
+fieldC temperature (none) value	0.333	0
+fieldC temperature (none) (boundary)	0.333	0
+fieldC temperature (none) (none)	0.333	0
+fieldC temperature (boundary) (boundary)	0.333	0
+fieldC temperature (boundary) value	0.333	0
+fieldC temperature (boundary) (none)	0.333	0
+fieldSetC temperature *	0.500	0
+fieldSetC temperature .	0.500	0
+noneFieldE temperature north	0.091	0
+noneFieldE temperature some	0.091	0
+noneFieldE temperature 50	0.091	0
+noneFieldE temperature is	0.091	0
+noneFieldE temperature and	0.091	0
+noneFieldE temperature wind	0.091	0
+noneFieldE temperature south	0.091	0
+noneFieldE temperature 55	0.091	0
+noneFieldE temperature 35	0.091	0
+noneFieldE temperature temperature	0.091	0
+noneFieldE temperature the	0.091	0
+genC temperature value name	0.333	0
+genC temperature value value	0.333	0
+genC temperature value generic	0.333	0
+fieldNameE temperature value north	0.091	0
+fieldNameE temperature value some	0.091	0
+fieldNameE temperature value temperature	0.091	0
+fieldNameE temperature value and	0.091	0
+fieldNameE temperature value wind	0.091	0
+fieldNameE temperature value the	0.091	0
+fieldNameE temperature value 35	0.091	0
+fieldNameE temperature value 55	0.091	0
+fieldNameE temperature value south	0.091	0
+fieldNameE temperature value 50	0.091	0
+fieldNameE temperature value is	0.091	0
+numMethodC temperature value roundup	0.167	0
+numMethodC temperature value noisedown	0.167	0
+numMethodC temperature value identity	0.167	0
+numMethodC temperature value noiseup	0.167	0
+numMethodC temperature value roundclose	0.167	0
+numMethodC temperature value rounddown	0.167	0
+numLNoiseC temperature value continue	0.500	0
+numLNoiseC temperature value stop	0.500	0
+numRNoiseC temperature value continue	0.500	0
+numRNoiseC temperature value stop	0.500	0
+numFilter temperature value min true	0.500	0
+numFilter temperature value min false	0.500	0
+numFilter temperature value max true	0.500	0
+numFilter temperature value max false	0.500	0
+numFilter temperature value other true	0.500	0
+numFilter temperature value other false	0.500	0
+
+filter temperature true	0.500	0
+filter temperature false	0.500	0
+
+fieldC windSpeed value value	0.333	0
+fieldC windSpeed value (boundary)	0.333	0
+fieldC windSpeed value (none)	0.333	0
+fieldC windSpeed (none) (none)	0.333	0
+fieldC windSpeed (none) (boundary)	0.333	0
+fieldC windSpeed (none) value	0.333	0
+fieldC windSpeed (boundary) (boundary)	0.333	0
+fieldC windSpeed (boundary) value	0.333	0
+fieldC windSpeed (boundary) (none)	0.333	0
+fieldSetC windSpeed *	0.500	0
+fieldSetC windSpeed .	0.500	0
+noneFieldE windSpeed 35	0.091	0
+noneFieldE windSpeed south	0.091	0
+noneFieldE windSpeed and	0.091	0
+noneFieldE windSpeed north	0.091	0
+noneFieldE windSpeed 50	0.091	0
+noneFieldE windSpeed is	0.091	0
+noneFieldE windSpeed 55	0.091	0
+noneFieldE windSpeed the	0.091	0
+noneFieldE windSpeed some	0.091	0
+noneFieldE windSpeed temperature	0.091	0
+noneFieldE windSpeed wind	0.091	0
+genC windSpeed value value	0.333	0
+genC windSpeed value name	0.333	0
+genC windSpeed value generic	0.333	0
+fieldNameE windSpeed value north	0.091	0
+fieldNameE windSpeed value the	0.091	0
+fieldNameE windSpeed value 55	0.091	0
+fieldNameE windSpeed value wind	0.091	0
+fieldNameE windSpeed value is	0.091	0
+fieldNameE windSpeed value 35	0.091	0
+fieldNameE windSpeed value south	0.091	0
+fieldNameE windSpeed value temperature	0.091	0
+fieldNameE windSpeed value 50	0.091	0
+fieldNameE windSpeed value and	0.091	0
+fieldNameE windSpeed value some	0.091	0
+numMethodC windSpeed value noisedown	0.167	0
+numMethodC windSpeed value noiseup	0.167	0
+numMethodC windSpeed value identity	0.167	0
+numMethodC windSpeed value rounddown	0.167	0
+numMethodC windSpeed value roundup	0.167	0
+numMethodC windSpeed value roundclose	0.167	0
+numLNoiseC windSpeed value stop	0.500	0
+numLNoiseC windSpeed value continue	0.500	0
+numRNoiseC windSpeed value continue	0.500	0
+numRNoiseC windSpeed value stop	0.500	0
+numFilter windSpeed value min true	0.500	0
+numFilter windSpeed value min false	0.500	0
+numFilter windSpeed value max true	0.500	0
+numFilter windSpeed value max false	0.500	0
+numFilter windSpeed value other false	0.500	0
+numFilter windSpeed value other true	0.500	0
+
+filter windSpeed true	0.500	0
+filter windSpeed false	0.500	0
+
+fieldC windDir value (none)	0.333	0
+fieldC windDir value value	0.333	0
+fieldC windDir value (boundary)	0.333	0
+fieldC windDir (none) (none)	0.333	0
+fieldC windDir (none) (boundary)	0.333	0
+fieldC windDir (none) value	0.333	0
+fieldC windDir (boundary) (boundary)	0.333	0
+fieldC windDir (boundary) (none)	0.333	0
+fieldC windDir (boundary) value	0.333	0
+fieldSetC windDir .	0.500	0
+fieldSetC windDir *	0.500	0
+noneFieldE windDir 55	0.091	0
+noneFieldE windDir 35	0.091	0
+noneFieldE windDir some	0.091	0
+noneFieldE windDir the	0.091	0
+noneFieldE windDir north	0.091	0
+noneFieldE windDir temperature	0.091	0
+noneFieldE windDir south	0.091	0
+noneFieldE windDir 50	0.091	0
+noneFieldE windDir and	0.091	0
+noneFieldE windDir is	0.091	0
+noneFieldE windDir wind	0.091	0
+genC windDir value name	0.333	0
+genC windDir value value	0.333	0
+genC windDir value generic	0.333	0
+fieldNameE windDir value 50	0.091	0
+fieldNameE windDir value is	0.091	0
+fieldNameE windDir value wind	0.091	0
+fieldNameE windDir value south	0.091	0
+fieldNameE windDir value temperature	0.091	0
+fieldNameE windDir value 55	0.091	0
+fieldNameE windDir value 35	0.091	0
+fieldNameE windDir value north	0.091	0
+fieldNameE windDir value and	0.091	0
+fieldNameE windDir value the	0.091	0
+fieldNameE windDir value some	0.091	0
+catE windDir value S wind	0.091	0
+catE windDir value S 35	0.091	0
+catE windDir value S the	0.091	0
+catE windDir value S some	0.091	0
+catE windDir value S north	0.091	0
+catE windDir value S is	0.091	0
+catE windDir value S 50	0.091	0
+catE windDir value S south	0.091	0
+catE windDir value S temperature	0.091	0
+catE windDir value S 55	0.091	0
+catE windDir value S and	0.091	0
+catE windDir value N some	0.091	0
+catE windDir value N 35	0.091	0
+catE windDir value N the	0.091	0
+catE windDir value N temperature	0.091	0
+catE windDir value N 50	0.091	0
+catE windDir value N is	0.091	0
+catE windDir value N south	0.091	0
+catE windDir value N and	0.091	0
+catE windDir value N 55	0.091	0
+catE windDir value N north	0.091	0
+catE windDir value N wind	0.091	0
+catFilter windDir value S true	0.500	0
+catFilter windDir value S false	0.500	0
+catFilter windDir value N false	0.500	0
+catFilter windDir value N true	0.500	0
+
+filter windDir true	0.500	0
+filter windDir false	0.500	0
+

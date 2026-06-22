@@ -1,0 +1,17 @@
+.tag files: each line is a sentence like so: <tag> <word> <tag> <word> ...
+.raw files: each line is a sentence which is just a sequence of words
+
+File format for grounded semantics:
+
+<prefix>.text:
+  Each line contains a sequence of words.
+<prefix>.events:
+  Each line is a record, which contains a set of tab-separated
+  <field-type><field>:<value>.  The possible field-types: $ (string), @
+  (categorical), # (integer), : (symbol; special case of a string), .
+  (metadata; to be ignored).
+<prefix>.align:
+  Each line contains a set of space-separated integers.  The first integer is
+  the line number of the text file.  The subsequent integers are the line
+  numbers of the events file to which the line of text is aligned.  Note: all
+  numbers are 0-based.

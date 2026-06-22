@@ -1,0 +1,1047 @@
+a	DET	DET
+big	X	X
+hole	N	N
+
+toy	N	N
+s	DIV	DIV
+take	V	V
+a	DET	DET
+bath	N	N
+
+just	X	X
+a	DET	DET
+little	X	X
+cream	N	N
+not	X	X
+much	X	X
+
+why	X	X
+do	V	V
+n't	X	X
+you	N	N
+sit	V	V
+on	P	P
+the	DET	DET
+little	X	X
+stool	N	N
+at	P	P
+the	DET	DET
+take	X	N
+
+there	X	X
+'s	C	C
+the	DET	DET
+baby	N	N
+
+let	V	V
+'s	X	N
+call	V	V
+him	N	N
+clever	X	N
+the	DET	DET
+clown	N	N
+
+that	X	X
+you	N	N
+saw	V	V
+down	X	X
+at	P	P
+the	DET	DET
+square	N	N
+saturday	X	X
+
+what	X	N
+'s	C	C
+the	DET	DET
+matter	N	N
+
+the	DET	DET
+the	DET	DET
+baby	N	N
+ca	X	X
+n't	X	X
+eat	V	V
+that	X	N
+ok	X	X
+
+yes	X	X
+that	X	N
+'s	C	C
+not	X	X
+the	DET	DET
+big	X	X
+stool	N	N
+
+and	X	X
+it	N	N
+'s	X	AUX
+go	V	V
+ing	ASP	ASP
+to	X	X
+park	V	V
+and	X	X
+go	V	V
+to	X	X
+sleep	V	V
+for	P	P
+the	DET	DET
+night	N	N
+
+where	X	N
+is	C	C
+the	DET	DET
+little	X	X
+man	N	N
+
+this	X	N
+is	C	C
+a	DET	DET
+big	X	X
+truck	N	N
+with	P	P
+two	X	X
+piece	N	N
+s	DIV	DIV
+
+that	X	N
+'s	C	C
+a	DET	DET
+funnel	N	N
+
+it	N	N
+look	V	V
+s	T	T
+like	X	X
+a	DET	DET
+little	X	X
+girl	N	N
+
+yes	X	X
+mommy	N	N
+is	AUX	AUX
+empty	V	V
+ing	ASP	ASP
+the	DET	DET
+garbage	N	N
+
+here	X	X
+look	V	V
+at	P	X
+the	DET	DET
+
+a	DET	DET
+chair	N	N
+
+it	N	N
+'s	C	C
+a	DET	DET
+it	N	N
+'s	C	C
+more	X	X
+like	X	X
+pig	N	N
+
+one	X	N
+for	P	P
+the	DET	DET
+dragon	N	N
+
+where	X	N
+are	C	C
+the	DET	DET
+earring	N	N
+s	DIV	DIV
+
+it	N	N
+come	V	V
+s	T	T
+out	X	X
+the	DET	DET
+back	N	N
+the	DET	DET
+back	N	N
+of	P	P
+the	DET	DET
+jet	N	N
+s	C	C
+right	X	X
+where	X	X
+your	DET	DET
+thumb	N	N
+
+i	N	N
+do	V	V
+n't	X	X
+think	V	V
+it	N	N
+blink	V	V
+s	T	T
+all	X	X
+the	DET	DET
+time	N	N
+does	T	AUX
+it	N	N
+
+this	X	N
+is	C	C
+the	DET	DET
+new	X	X
+one	X	N
+honey	N	N
+
+a	DET	DET
+bear	N	N
+
+go	V	V
+upstairs	X	X
+in	P	P
+the	DET	DET
+bedroom	N	N
+
+you	N	N
+want	V	V
+to	X	X
+put	V	V
+the	DET	DET
+mirror	N	N
+on	P	P
+mommy	N	N
+
+want	V	V
+ed	T	T
+to	X	X
+see	V	V
+if	X	X
+we	N	N
+could	X	X
+hook	V	V
+up	X	X
+the	DET	DET
+car	N	N
+
+been	V	C
+through	P	P
+the	DET	DET
+war	N	N
+
+that	X	N
+'s	AUX	AUX
+go	V	V
+ing	ASP	ASP
+to	X	X
+be	V	C
+a	DET	DET
+tall	X	X
+boat	N	N
+child	N	N
+
+did	V	AUX
+you	N	N
+help	V	V
+mummy	N	N
+with	P	P
+the	DET	DET
+shoe	N	N
+s	DIV	DIV
+
+i	N	N
+'ve	V	AUX
+never	X	X
+seen	V	V
+a	DET	DET
+striped	X	X
+watch	N	N
+
+lydia	N	N
+was	C	C
+a	DET	DET
+rich	X	X
+woman	N	N
+who	X	X
+love	V	V
+ed	T	T
+the	DET	DET
+lord	N	N
+
+did	V	AUX
+you	N	N
+hear	V	V
+the	DET	DET
+train	N	N
+whistle	N	N
+
+let	V	V
+'s	X	N
+who	X	N
+are	AUX	AUX
+you	N	N
+put	V	V
+ing	ASP	ASP
+in	P	P
+the	DET	DET
+bed	N	N
+
+i	N	N
+'ll	X	T
+make	V	V
+it	N	N
+go	V	V
+flipflop	X	X
+in	P	P
+a	DET	DET
+little	X	X
+while	X	N
+
+what	X	DET
+animal	N	N
+s	DIV	DIV
+did	X	AUX
+you	N	N
+see	V	V
+at	P	P
+the	DET	DET
+zoo	N	N
+
+i	N	N
+think	V	V
+it	N	N
+goes	T	T
+at	P	P
+the	DET	DET
+bottom	N	N
+
+do	V	AUX
+you	N	N
+know	V	V
+how	X	X
+to	X	X
+put	V	V
+the	DET	DET
+knife	N	N
+s	DIV	DIV
+and	X	X
+fork	N	N
+s	DIV	DIV
+and	X	X
+spoon	N	N
+s	DIV	DIV
+on	P	P
+the	DET	DET
+
+uh	X	X
+can	X	X
+you	N	N
+show	V	V
+me	N	N
+the	DET	DET
+boy	N	N
+is	AUX	AUX
+not	X	X
+sit	V	V
+ing	ASP	ASP
+
+if	X	X
+lala	N	N
+does	T	T
+n't	X	X
+live	V	V
+there	X	X
+anymore	X	X
+she	N	N
+does	T	T
+n't	X	X
+need	V	V
+the	DET	DET
+prediction	N	N
+
+i	N	N
+need	V	V
+a	DET	DET
+new	X	X
+one	X	N
+
+so	X	X
+what	X	N
+happen	V	V
+ed	T	T
+to	P	P
+the	DET	DET
+horse	N	N
+and	X	X
+the	DET	DET
+feet	N	N
+
+why	X	X
+do	V	AUX
+you	N	N
+like	V	V
+all	X	X
+the	DET	DET
+horse	N	N
+s	DIV	DIV
+to	X	X
+lie	V	V
+down	X	X
+
+yeah	X	X
+you	N	N
+spill	V	V
+ed	T	T
+it	N	N
+all	X	X
+over	X	X
+the	DET	DET
+chair	N	N
+too	X	X
+
+i	N	N
+do	V	AUX
+n't	X	X
+know	X	V
+it	N	N
+'s	C	C
+just	X	X
+like	X	X
+the	DET	DET
+brady	X	X
+bunch	N	N
+they	N	N
+come	V	V
+on	X	X
+back	X	X
+to	X	X
+back	X	X
+
+oh	X	X
+we	N	N
+'ll	X	T
+pour	V	V
+the	DET	DET
+cream	N	N
+tea	N	N
+in	P	P
+here	X	X
+
+what	X	N
+'s	C	C
+the	DET	DET
+name	N	N
+of	P	P
+the	DET	DET
+book	N	N
+
+it	N	N
+'s	C	C
+just	X	X
+sort	X	X
+of	P	P
+a	DET	DET
+day	N	N
+care	N	N
+place	N	N
+
+oh	X	X
+look	V	V
+at	P	P
+all	X	X
+the	DET	DET
+monkey	N	N
+s	DIV	DIV
+
+maybe	X	X
+on	P	P
+the	DET	DET
+kitchen	N	N
+floor	N	N
+
+why	X	X
+do	V	AUX
+n't	X	X
+you	N	N
+put	V	V
+that	X	N
+on	P	P
+the	DET	DET
+on	P	P
+the	DET	DET
+grass	N	N
+ok	X	X
+
+you	N	N
+'re	AUX	AUX
+go	V	V
+ing	ASP	ASP
+to	X	X
+sit	V	V
+on	P	P
+the	DET	DET
+couch	N	N
+
+that	X	N
+'s	C	C
+a	DET	DET
+boy	N	N
+
+that	X	N
+'s	C	C
+a	DET	DET
+suit	N	N
+
+a	DET	DET
+what	X	N
+
+can	X	X
+you	N	N
+put	V	V
+the	DET	DET
+sock	N	N
+on	X	X
+
+she	N	N
+'s	AUX	AUX
+hold	V	V
+ing	ASP	ASP
+a	DET	DET
+balloon	N	N
+and	X	X
+a	DET	DET
+basket	N	N
+with	P	P
+what	X	N
+
+let	V	V
+'s	X	N
+go	V	V
+for	P	P
+a	DET	DET
+walk	N	N
+
+you	N	N
+have	V	V
+to	X	X
+go	V	V
+from	P	P
+one	X	X
+to	P	P
+the	DET	DET
+other	X	X
+
+what	X	N
+does	T	T
+the	DET	DET
+mouse	N	N
+want	V	V
+to	X	X
+see	V	V
+
+the	DET	DET
+boy	N	N
+s	DIV	DIV
+are	AUX	AUX
+carry	V	V
+ing	ASP	ASP
+stick	N	N
+s	DIV	DIV
+
+and	X	X
+after	P	P
+the	DET	DET
+wake	N	N
+we	N	N
+went	V	V
+over	X	X
+to	P	P
+the	DET	DET
+prudential	N	N
+
+oh	X	X
+the	DET	DET
+beater	N	N
+'s	C	C
+hot	X	X
+
+that	X	N
+'s	C	C
+a	DET	DET
+rubber	N	N
+
+i	N	N
+want	V	V
+you	N	N
+to	X	X
+tell	V	V
+me	N	N
+about	N	P
+a	DET	DET
+dream	N	N
+you	N	N
+have	V	V
+
+that	X	DET
+'s	C	C
+a	DET	DET
+string	N	N
+from	P	P
+baby	N	N
+sarah	N	N
+'s	DET	DET
+blanket	N	N
+
+was	C	C
+that	X	N
+a	DET	DET
+yes	X	X
+or	X	X
+a	DET	DET
+no	X	X
+
+read	V	V
+the	DET	DET
+story	N	N
+to	P	P
+me	N	N
+
+it	N	N
+'s	C	C
+a	DET	DET
+valentine	N	N
+
+the	DET	DET
+dragon	N	N
+has	T	T
+to	X	X
+stay	V	V
+inside	P	P
+his	DET	DET
+cage	N	N
+
+close	V	V
+ing	ASP	ASP
+the	DET	DET
+door	N	N
+
+now	X	X
+how	X	X
+'s	AUX	AUX
+the	DET	DET
+car	N	N
+go	V	V
+ing	ASP	ASP
+to	X	X
+go	V	V
+by	X	X
+
+all	X	X
+done	V	V
+with	P	P
+the	DET	DET
+juice	N	N
+
+now	X	X
+who	X	N
+did	V	AUX
+you	N	N
+put	V	V
+in	P	P
+the	DET	DET
+house	N	N
+
+that	X	N
+'s	C	C
+a	DET	DET
+kangaroo	N	N
+
+i	N	N
+was	AUX	AUX
+sit	V	V
+ing	ASP	ASP
+on	P	P
+the	DET	DET
+bus	N	N
+then	X	X
+
+put	V	V
+the	DET	DET
+in	P	P
+his	DET	DET
+house	N	N
+
+did	V	AUX
+you	N	N
+play	V	V
+a	DET	DET
+game	N	N
+with	P	P
+that	X	N
+
+look	V	V
+at	P	P
+the	DET	DET
+big	X	X
+log	N	N
+s	DIV	DIV
+
+get	V	V
+your	DET	DET
+belly	N	N
+out	X	X
+of	P	P
+the	DET	DET
+way	N	N
+
+can	X	X
+i	N	N
+see	V	V
+the	DET	DET
+duck	N	N
+
+and	X	X
+a	DET	DET
+bathroom	N	N
+kitchen	N	N
+
+did	V	AUX
+you	N	N
+wear	V	V
+have	V	V
+a	DET	DET
+life	N	N
+jacket	N	N
+
+he	N	N
+'s	C	C
+in	P	P
+the	DET	DET
+fence	N	N
+
+a	DET	DET
+new	X	X
+bright	X	X
+shiny	X	X
+house	N	N
+
+well	X	X
+we	N	N
+just	X	X
+happen	V	V
+to	X	X
+have	V	V
+some	X	X
+in	P	P
+the	DET	DET
+refrigerator	N	N
+
+give	V	V
+daddy	N	N
+the	DET	DET
+quarter	N	N
+
+those	X	N
+were	C	C
+the	DET	DET
+string	N	N
+s	DIV	DIV
+that	X	X
+were	AUX	AUX
+hold	V	V
+ing	ASP	ASP
+the	DET	DET
+animal	N	N
+s	DIV	DIV
+to	P	P
+the	DET	DET
+box	N	N
+
+were	AUX	AUX
+you	N	N
+change	V	V
+ing	ASP	ASP
+the	DET	DET
+station	N	N
+
+mister	N	N
+gump	N	N
+has	T	V
+a	DET	DET
+seven	N	N
+
+oh	X	X
+look	V	V
+what	X	X
+the	DET	DET
+baby	N	N
+did	V	V
+
+justin	N	N
+'s	C	C
+the	DET	DET
+new	X	X
+baby	N	N
+in	P	P
+the	DET	DET
+family	N	N
+
+where	X	N
+was	C	C
+the	DET	DET
+bump	N	N
+
+let	V	V
+'s	X	N
+set	V	V
+the	DET	DET
+table	N	N
+in	P	P
+the	DET	DET
+kitchen	N	N
+you	N	N
+want	V	V
+to	X	X
+
+can	X	AUX
+you	N	N
+draw	V	V
+a	DET	DET
+picture	N	N
+of	P	P
+a	DET	DET
+sleepyheady	N	N
+
+well	X	X
+that	X	N
+was	C	C
+a	DET	DET
+mistake	N	N
+and	X	X
+i	N	N
+ca	X	X
+n't	X	X
+remember	V	V
+
+i	N	N
+'m	AUX	AUX
+make	V	V
+ing	ASP	ASP
+a	DET	DET
+snowman	N	N
+
+well	X	X
+i	N	N
+told	V	V
+nathaniel	N	N
+that	X	X
+go	V	V
+ing	ASP	X
+out	X	X
+to	X	X
+barbecue	V	V
+save	V	V
+s	T	T
+more	X	X
+of	P	P
+a	DET	DET
+symbolic	X	X
+cash	N	N
+than	X	X
+after	X	P
+it	N	N
+was	AUX	AUX
+start	V	V
+ed	T	T
+barbecue	V	V
+ing	ASP	ASP
+season	N	N
+
+do	V	AUX
+you	N	N
+want	V	V
+to	X	X
+help	V	V
+me	N	N
+put	V	V
+the	DET	DET
+stuff	N	N
+away	X	X
+that	X	X
+'s	C	C
+mine	X	N
+
+i	N	N
+did	V	V
+a	DET	DET
+i	N	N
+eat	V	V
+the	DET	DET
+i	N	N
+eat	V	V
+the	DET	DET
+i	N	N
+eat	V	V
+that	X	N
+right	X	X
+here	X	X
+
+there	X	X
+goes	T	T
+the	DET	DET
+dirt	N	N
+
+he	N	N
+'s	V	AUX
+got	V	V
+to	X	X
+be	V	AUX
+bounce	V	V
+ing	ASP	ASP
+to	P	P
+the	DET	DET
+music	N	N
+
+what	X	N
+'s	C	C
+the	DET	DET
+name	N	N
+
+the	DET	DET
+white	X	X
+those	X	DET
+two	X	N
+smell	V	V
+ed	T	T
+the	DET	DET
+best	X	X
+
+oh	X	X
+what	X	N
+'s	C	C
+the	DET	DET
+matter	N	N
+
+do	V	AUX
+you	N	N
+like	V	V
+him	N	N
+a	DET	DET
+lot	X	X
+
+show	V	V
+the	DET	DET
+doggy	N	N
+what	X	N
+santa_claus	N	N
+brought	V	V
+to	P	P
+you	N	N
+
+okay	X	X
+it	N	N
+'s	C	C
+a	DET	DET
+lady	N	N
+
+now	X	X
+let	V	V
+'s	X	N
+put	V	V
+a	DET	DET
+hunk	N	N
+of	P	P
+this	X	N
+in	X	X
+and	X	X
+see	V	V
+what	X	N
+happen	V	V
+s	T	T
+alright	X	X
+
+show		
+me		
+the		
+girl		
+s		
+
+you		
+can		
+give		
+it		
+a		
+pull		
+
+can		
+you		
+do		
+the		
+snap		
+
+left		
+the		
+car		
+light		
+s		
+on		
+
+that		
+'s		
+a		
+bulldozer		
+
+let		
+'s		
+put		
+everything		
+on		
+the		
+table		
+so		
+we		
+can		
+eat		
+
+shall		
+we		
+build		
+some		
+a		
+zoo		
+with		
+block		
+s		
+
+oh		
+that		
+'s		
+a		
+new		
+toy		
+
+now		
+observer		
+'s		
+got		
+the		
+fish		
+
+i	N	N
+had	V	V
+a	DET	DET
+tape	N	N
+recorder	N	N
+once	X	X
+that	X	DET
+uh	X	X
+start	V	V
+ed	T	T
+to	X	X
+sizzle	V	V
+when	X	X
+i	N	N
+
+you	N	N
+clean	V	V
+ed	T	T
+up	X	X
+the	DET	DET
+whole	X	X
+cupboard	N	N
+
