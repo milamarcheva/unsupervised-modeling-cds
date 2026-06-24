@@ -154,11 +154,13 @@ public class Options {
   @Option(gloss="Mila") public int mila = 4;
   // PartIIIBegin
   @Option(gloss="Induction type: normal | morph | mlu ") public InductionType inductionType = InductionType.normal;
+  @Option(gloss="Use Bulgarian language profile") public Boolean useBG = Boolean.FALSE;
+
   @Option(gloss="Dilute value for shared cluster") public Integer diluteValue=2;
   @Option(gloss="Normalize, default is optimize, i.e. normalization + smoothing") public Boolean normalize = Boolean.FALSE;
 //  @Option(gloss="Set of morphemes whose probs need to be diluted in the stage function") public ArrayList<String> diluteSet= new ArrayList();
   @Option(gloss="Order in which the morphemes are staged, 0: Brown") public Integer order = 0;
-  @Option(gloss="Order in which the morphemes are staged as string, default is Brown") public String orderStr = "ING,IN,ON,PLU,IRPAST,POS,UNCCOP,ART,RPAST,R3,IR3,UNCAUX,CCOP,CAUX";
+  @Option(gloss="Explicit comma-separated stage order; leave empty to use the language-specific default") public String orderStr = "";
   @Option(gloss="Priming (anchoring) with morphemes, default is true") public Boolean priming =  Boolean.TRUE;
   @Option(gloss="Gradual unlocking, default is true") public Boolean gradualUnlocking =  Boolean.TRUE;
 
@@ -182,6 +184,12 @@ public class Options {
   @Option(gloss="Anchor index for irregualr past, 0-12") public Integer IRPASTAnchorIndex = 0;
   @Option(gloss="Anchor index for irregualr third person singular, 0-2") public Integer IR3AnchorIndex = 0;
 
+  @Option(gloss="Anchor index for Bulgarian plural, 0-2") public Integer BGPLUAnchorIndex = 0;
+  @Option(gloss="Anchor index for Bulgarian definiteness, 0-6") public Integer BGDEFAnchorIndex = 0;
+  @Option(gloss="Anchor index for Bulgarian present person/number, 0-16") public Integer BGPRESAnchorIndex = 0;
+  @Option(gloss="Anchor index for Bulgarian inferential mood, 0-3") public Integer BGINFAnchorIndex = 0;
+  @Option(gloss="Anchor index for Bulgarian past tense, 0-4") public Integer BGPASTAnchorIndex = 0;
+  @Option(gloss="Anchor index for Bulgarian preposition, 0-1") public Integer BGPREPAnchorIndex = 0;
 
   // PartIIIEnd
 

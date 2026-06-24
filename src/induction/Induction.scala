@@ -44,6 +44,8 @@ class InductionRunner extends Runnable {
     }
     val model = prob.newModel
     model.readExamples
+    if (model.numExamples == 0 && opts.genNumExamples == 0)
+      fail("No examples were read. Check -inputPaths/-inputLists and run from the unsupervised-modeling directory.")
 //    model.selectExamples(0, 102828)
 
     Record.begin("stats")
@@ -66,9 +68,12 @@ class InductionRunner extends Runnable {
     var starts = Map("UNCCOP" -> 178252, "CAUX" -> 286988, "RPAST" -> 242183, "PREP" -> 122481, "IN" -> 122481, "UNCAUX" -> 256854, "ING" -> 102828, "IRPAST" -> 153573, "POS" -> 173957, "PLU" -> 136905, "ART" -> 196114, "R3" -> 247283, "CCOP" -> 263783, "ON" -> 130292, "IR3" -> 251822)
     var ends = Map("UNCCOP" -> 196114, "CAUX" -> 295245, "RPAST" -> 247283, "IN" -> 130292, "UNCAUX" -> 263783, "ING" -> 122481, "IRPAST" -> 173957, "POS" -> 178252, "PLU" -> 153573, "ART" -> 242183, "R3" -> 251822, "CCOP" -> 286988, "PREP" -> 136905, "ON" -> 136905, "IR3" -> 256854)
     // 295245
-    var startsBG = Map("BGPLU" -> 30702, "BGDEF" -> 53951, "BGPRES" -> 115120, "BGINF" -> 155337, "BGPAST" -> 174676, "BGFUT" -> 205083, "BGPREP" -> 214749)
-    var endsBG = Map("BGPLU" -> 53950, "BGDEF" -> 115119, "BGPRES" -> 155336, "BGINF" -> 174675, "BGPAST" -> 205082, "BGFUT" -> 214748, "BGPREP" -> 240525)
-    // testStart = 240526
+    // Derived from sample-data/bg/bg_hmm_tokenised_morphLemma_duplicate_category_ranges.tsv.
+    // startsBG are inclusive start indices from the TSV, and endsBG are exclusive
+    // end indices to match selectExamples(start, end) -> slice(start, end).
+    var startsBG = Map("BGPLU" -> 29420, "BGDEF" -> 52669, "BGPRES" -> 113838, "BGINF" -> 154055, "BGPAST" -> 173394, "BGFUT" -> 203801, "BGPREP" -> 213467)
+    var endsBG = Map("BGPLU" -> 52669, "BGDEF" -> 113838, "BGPRES" -> 154055, "BGINF" -> 173394, "BGPAST" -> 203801, "BGFUT" -> 213467, "BGPREP" -> 239244)
+    // testStart = 239244
 
     if (opts.stagingExamplesNum>0){
       starts.keys.foreach ((m) => ends+= (m -> (starts.apply(m)+ opts.stagingExamplesNum)))
@@ -108,14 +113,14 @@ class InductionRunner extends Runnable {
 //    var order = orders.apply(opts.order)
 
     //UNncomment the line below if you want order from string
-    var order = opts.orderStr.split(",").toList
+    // var order = opts.orderStr.split(",").toList
 
 
     val clusterGrouping = clusterGroupings.apply(opts.grouping)
     var clusterIndex = clusterIndices.apply(opts.grouping)
 
-    var clusterIndexBG = Map("RPAST" -> -1, "ART" -> -1)
-    val clusterGroupingBG = Set( Set("ART"),  Set("RPAST")) //10
+    var clusterIndexBG = clusterIndices.apply(359)
+    val clusterGroupingBG = clusterGroupings.apply(359)
 
     val priming = opts.priming
 
@@ -169,6 +174,44 @@ class InductionRunner extends Runnable {
 
     val clustersDilute = Set("IN", "ON", "PREP", "IRPAST", "POS", "UNCCOP", "ART", "RPAST", "R3", "IR3", "UNCAUX", "CCOP", "CAUX")
 
+    val englishInitEnd = 102828
+    val englishTrainEnd = 295245
+
+    val bulgarianInitEnd = 29420
+    val bulgarianTrainEnd = 239244
+
+    val usingBG = opts.useBG || opts.inductionType == Options.InductionType.bg
+
+    val defaultOrder = if (usingBG) orders(359) else orders(opts.order)
+    val explicitOrderStr = Option(opts.orderStr).map(_.trim).getOrElse("")
+
+    var order =
+      if (explicitOrderStr.nonEmpty)
+        explicitOrderStr.split(",").map(_.trim).filter(_.nonEmpty).toList
+      else
+        defaultOrder
+
+    val activeNouns = if (usingBG) nounsAllBG else nounsAll
+    val activeVerbs = if (usingBG) verbsAllBG else verbsAll
+
+    val activeStarts = if (usingBG) startsBG else starts
+    val activeEnds = if (usingBG) endsBG else ends
+
+    val activeInitEnd = if (usingBG) bulgarianInitEnd else englishInitEnd
+    val activeTrainEnd = if (usingBG) bulgarianTrainEnd else englishTrainEnd
+
+    val activeClusterGrouping = if (usingBG) clusterGroupingBG else clusterGrouping
+    var activeClusterIndex = if (usingBG) clusterIndexBG else clusterIndex
+
+    val activeClusterMorphemes = if (usingBG) clusterMorphemesBG else clusterMorphemes
+    val activeClustersDilute = if (usingBG) activeClusterMorphemes.keySet else clustersDilute
+
+    val invalidStages = order.filterNot(activeStarts.contains)
+    if (invalidStages.nonEmpty) {
+      val languageLabel = if (usingBG) "Bulgarian" else "English"
+      fail("Order contains stages not available for " + languageLabel + ": " + invalidStages.mkString(", "))
+    }
+
     if (opts.inductionType == Options.InductionType.normal) {
       model.learn("stage1", opts.stage1)
       model.learn("stage2", opts.stage2)
@@ -177,7 +220,7 @@ class InductionRunner extends Runnable {
       end_track
     }
     else if (priming!=true) { // gradual unlocking True + ordering True
-      model.selectExamples(0, 102828)
+      model.selectExamples(0, activeInitEnd)
       model.lockStates(3, prob.opts.K)
       model.learn("stage0", opts.stage2)
       var lastLocked = 3
@@ -186,7 +229,7 @@ class InductionRunner extends Runnable {
         for (m <- order) {
           track(m + "lastLocked"+ (lastLocked))
           model.readExamples
-          model.selectExamples(starts.apply(m), ends.apply(m))
+          model.selectExamples(activeStarts.apply(m), activeEnds.apply(m))
           //unlock state
           if (lastLocked<10){
             model.unlockState(lastLocked)
@@ -195,11 +238,11 @@ class InductionRunner extends Runnable {
           var grouping = Set[String]()
           var newInd = 0
 
-          if (clusterIndex.apply(m) > 0) {
+          if (activeClusterIndex.apply(m) > 0) {
             //lastLocked should not be updated because no more new clusters need to be unlocked
           } else {
             breakable {
-              for (g <- clusterGrouping) {
+              for (g <- activeClusterGrouping) {
                 if (g.contains(m)) {
                   grouping = g
                   break
@@ -209,20 +252,20 @@ class InductionRunner extends Runnable {
             var groupingNoM = grouping - m
             breakable {
               for (m2 <- groupingNoM) { //grouping-m
-                if (clusterIndex.apply(m2) > 0) {
-                  newInd = clusterIndex.apply(m2)
+                if (activeClusterIndex.apply(m2) > 0) {
+                  newInd = activeClusterIndex.apply(m2)
                   break
                 }
               }
             }
             if (newInd == 0) {
               for (m3 <- grouping) { //all morphems in the group
-                clusterIndex += (m3 -> lastLocked)
+                activeClusterIndex += (m3 -> lastLocked)
               }
               lastLocked += 1
             } else {
               for (m3 <- grouping) { //all morphems in the group
-                clusterIndex += (m3 -> newInd)
+                activeClusterIndex += (m3 -> newInd)
               }
             }
           }
@@ -240,12 +283,12 @@ class InductionRunner extends Runnable {
 
     }
     else if (opts.gradualUnlocking!=true) { // Gradual unlocking is false + priming is True
-      val nouns = nounsAll.slice(0, opts.nounsNum)
-      val verbs = verbsAll.slice(0, opts.verbsNum)
+      val nouns = activeNouns.slice(0, opts.nounsNum)
+      val verbs = activeVerbs.slice(0, opts.verbsNum)
       track("orderStr " + order)
 
       // original Brown order
-      model.selectExamples(0, 102828)
+      model.selectExamples(0, activeInitEnd)
       model.stageGeneral("initNOUN", nouns, 0, initStage = true)
       model.stageGeneral("initVERB", verbs, 1, initStage = true)
 
@@ -256,22 +299,16 @@ class InductionRunner extends Runnable {
 
         for (m <- order) {
           model.readExamples
-          //          if (m == "CAUX"){
-          //            track("this is CAUX")
-          //            model.selectExamples(starts.apply(m), ends.apply(m)+3)
-          //          }
-          //          else{
-          model.selectExamples(starts.apply(m), ends.apply(m))
+          model.selectExamples(activeStarts.apply(m), activeEnds.apply(m))
 
-          //          }
           var grouping = Set[String]()
           var newInd = 0
 
-          if (clusterIndex.apply(m) > 0) {
+          if (activeClusterIndex.apply(m) > 0) {
             //lastLocked should not be updated because no more new clusters need to be unlocked
           } else {
             breakable {
-              for (g <- clusterGrouping) {
+              for (g <- activeClusterGrouping) {
                 if (g.contains(m)) {
                   grouping = g
                   break
@@ -281,30 +318,33 @@ class InductionRunner extends Runnable {
             var groupingNoM = grouping - m
             breakable {
               for (m2 <- groupingNoM) { //grouping-m
-                if (clusterIndex.apply(m2) > 0) {
-                  newInd = clusterIndex.apply(m2)
+                if (activeClusterIndex.apply(m2) > 0) {
+                  newInd = activeClusterIndex.apply(m2)
                   break
                 }
               }
             }
             if (newInd == 0) {
               for (m3 <- grouping) { //all morphems in the group
-                clusterIndex += (m3 -> lastLocked)
+                activeClusterIndex += (m3 -> lastLocked)
               }
               lastLocked += 1
             } else {
               for (m3 <- grouping) { //all morphems in the group
-                clusterIndex += (m3 -> newInd)
+                activeClusterIndex += (m3 -> newInd)
               }
             }
           }
 
-            model.stageGeneral(m, clusterMorphemes.apply(m), clusterIndex.apply(m), countsType = "sharedCluster",
+            model.stageGeneral(m, activeClusterMorphemes.apply(m), activeClusterIndex.apply(m), countsType = "sharedCluster",
               dilute = opts.diluteValue, normalize = opts.normalize, anchor1 = opts.anchor1,
               UNCCOPAnchorIndex = opts.UNCCOPAnchorIndex, UNCAUXAnchorIndex = opts.UNCAUXAnchorIndex,
               CAUXAnchorIndex = opts.CAUXAnchorIndex, CCOPAnchorIndex = opts.CCOPAnchorIndex,
               PREPAnchorIndex = opts.PREPAnchorIndex, ARTAnchorIndex = opts.ARTAnchorIndex,
-              IRPASTAnchorIndex = opts.IRPASTAnchorIndex, IR3AnchorIndex = opts.IR3AnchorIndex)
+              IRPASTAnchorIndex = opts.IRPASTAnchorIndex, IR3AnchorIndex = opts.IR3AnchorIndex,
+              BGPLUAnchorIndex = opts.BGPLUAnchorIndex, BGDEFAnchorIndex = opts.BGDEFAnchorIndex,
+              BGPRESAnchorIndex = opts.BGPRESAnchorIndex, BGINFAnchorIndex = opts.BGINFAnchorIndex,
+              BGPASTAnchorIndex = opts.BGPASTAnchorIndex, BGPREPAnchorIndex = opts.BGPREPAnchorIndex)
 
           model.learn("stage" + m, opts.stage2)
 
@@ -322,22 +362,22 @@ class InductionRunner extends Runnable {
 
     }
     else if (opts.inductionType == Options.InductionType.morph) {
-      val nouns = nounsAll.slice(0, opts.nounsNum)
-      val verbs = verbsAll.slice(0, opts.verbsNum)
+      val nouns = activeNouns.slice(0, opts.nounsNum)
+      val verbs = activeVerbs.slice(0, opts.verbsNum)
       track("orderStr " + order  )
 
       // original Brown order
-      model.selectExamples(0, 102828)
+      model.selectExamples(0, activeInitEnd)
       model.stageGeneral("initNOUN", nouns, 0, initStage = true)
       model.stageGeneral("initVERB", verbs, 1, initStage = true)
 
       if (opts.onlyNounVerb){
         model.learn("stage0", opts.stage2)
         model.readExamples
-        model.selectExamples(102828, 295245)
+        model.selectExamples(activeInitEnd, activeTrainEnd)
         model.learn("stageAllMorphemes" , opts.stage2)
         track("Writing out emissions for selected words for this stage", Execution.getFile("stageAllMorphemes" + ".emissions"))
-        Utils.writeLines(Execution.getFile("stageAllMorphemes" + ".emissions"), model.allEmissionsForWord)
+        //Utils.writeLines(Execution.getFile("stageAllMorphemes" + ".emissions"), model.allEmissionsForWord)
         end_track
       }
 
@@ -353,17 +393,17 @@ class InductionRunner extends Runnable {
 //            model.selectExamples(starts.apply(m), ends.apply(m)+3)
 //          }
 //          else{
-          model.selectExamples(starts.apply(m), ends.apply(m))
+          model.selectExamples(activeStarts.apply(m), activeEnds.apply(m))
 
 //          }
           var grouping = Set[String]()
           var newInd = 0
 
-          if (clusterIndex.apply(m) > 0) {
+          if (activeClusterIndex.apply(m) > 0) {
             //lastLocked should not be updated because no more new clusters need to be unlocked
           } else {
             breakable {
-              for (g <- clusterGrouping) {
+              for (g <- activeClusterGrouping) {
                 if (g.contains(m)) {
                   grouping = g
                   break
@@ -373,38 +413,44 @@ class InductionRunner extends Runnable {
             var groupingNoM = grouping - m
             breakable {
               for (m2 <- groupingNoM) { //grouping-m
-                if (clusterIndex.apply(m2) > 0) {
-                  newInd = clusterIndex.apply(m2)
+                if (activeClusterIndex.apply(m2) > 0) {
+                  newInd = activeClusterIndex.apply(m2)
                   break
                 }
               }
             }
             if (newInd == 0) {
               for (m3 <- grouping) { //all morphems in the group
-                clusterIndex += (m3 -> lastLocked)
+                activeClusterIndex += (m3 -> lastLocked)
               }
               lastLocked += 1
             } else {
               for (m3 <- grouping) { //all morphems in the group
-                clusterIndex += (m3 -> newInd)
+                activeClusterIndex += (m3 -> newInd)
               }
             }
           }
 
-          if (clustersDilute.contains(m)) {
-            model.stageGeneral(m, clusterMorphemes.apply(m), clusterIndex.apply(m), countsType = "sharedCluster",
+          if (activeClustersDilute.contains(m)) {
+            model.stageGeneral(m, activeClusterMorphemes.apply(m), activeClusterIndex.apply(m), countsType = "sharedCluster",
               dilute = opts.diluteValue, normalize = opts.normalize, anchor1 = opts.anchor1,
               UNCCOPAnchorIndex = opts.UNCCOPAnchorIndex, UNCAUXAnchorIndex = opts.UNCAUXAnchorIndex,
               CAUXAnchorIndex = opts.CAUXAnchorIndex, CCOPAnchorIndex = opts.CCOPAnchorIndex,
               PREPAnchorIndex = opts.PREPAnchorIndex, ARTAnchorIndex = opts.ARTAnchorIndex,
-              IRPASTAnchorIndex = opts.IRPASTAnchorIndex, IR3AnchorIndex = opts.IR3AnchorIndex)
+              IRPASTAnchorIndex = opts.IRPASTAnchorIndex, IR3AnchorIndex = opts.IR3AnchorIndex,
+              BGPLUAnchorIndex = opts.BGPLUAnchorIndex, BGDEFAnchorIndex = opts.BGDEFAnchorIndex,
+              BGPRESAnchorIndex = opts.BGPRESAnchorIndex, BGINFAnchorIndex = opts.BGINFAnchorIndex,
+              BGPASTAnchorIndex = opts.BGPASTAnchorIndex, BGPREPAnchorIndex = opts.BGPREPAnchorIndex)
           }
           else {
-            model.stageGeneral(m, clusterMorphemes.apply(m), clusterIndex.apply(m), normalize = opts.normalize, anchor1 = opts.anchor1,
+            model.stageGeneral(m, activeClusterMorphemes.apply(m), activeClusterIndex.apply(m), normalize = opts.normalize, anchor1 = opts.anchor1,
               UNCCOPAnchorIndex = opts.UNCCOPAnchorIndex, UNCAUXAnchorIndex = opts.UNCAUXAnchorIndex,
               CAUXAnchorIndex = opts.CAUXAnchorIndex, CCOPAnchorIndex = opts.CCOPAnchorIndex,
               PREPAnchorIndex = opts.PREPAnchorIndex, ARTAnchorIndex = opts.ARTAnchorIndex,
-              IRPASTAnchorIndex = opts.IRPASTAnchorIndex, IR3AnchorIndex = opts.IR3AnchorIndex)
+              IRPASTAnchorIndex = opts.IRPASTAnchorIndex, IR3AnchorIndex = opts.IR3AnchorIndex,
+              BGPLUAnchorIndex = opts.BGPLUAnchorIndex, BGDEFAnchorIndex = opts.BGDEFAnchorIndex,
+              BGPRESAnchorIndex = opts.BGPRESAnchorIndex, BGINFAnchorIndex = opts.BGINFAnchorIndex,
+              BGPASTAnchorIndex = opts.BGPASTAnchorIndex, BGPREPAnchorIndex = opts.BGPREPAnchorIndex)
           }
 
           model.lockStates(lastLocked, prob.opts.K)
@@ -426,19 +472,18 @@ class InductionRunner extends Runnable {
 
     }
     else if (opts.inductionType == Options.InductionType.bg) {
-      val nouns = nounsAllBG.slice(0, opts.nounsNum)
-      val verbs = verbsAllBG.slice(0, opts.verbsNum)
+      val nouns = activeNouns.slice(0, opts.nounsNum)
+      val verbs = activeVerbs.slice(0, opts.verbsNum)
       track("orderStr " + order)
 
-      // original Brown order
-      model.selectExamples(0, 5650)
+      model.selectExamples(0, activeInitEnd)
       model.stageGeneral("initNOUN", nouns, 0, initStage = true)
       model.stageGeneral("initVERB", verbs, 1, initStage = true)
 
       if (opts.onlyNounVerb) {
         model.learn("stage0", opts.stage2)
         model.readExamples
-        model.selectExamples(5650, 55650)
+        model.selectExamples(activeInitEnd, activeTrainEnd)
         model.learn("stageAllMorphemes", opts.stage2)
         track("Writing out emissions for selected words for this stage", Execution.getFile("stageAllMorphemes" + ".emissions"))
         Utils.writeLines(Execution.getFile("stageAllMorphemes" + ".emissions"), model.allEmissionsForWord)
@@ -451,15 +496,15 @@ class InductionRunner extends Runnable {
 
         for (m <- order) {
           model.readExamples
-          model.selectExamples(startsBG.apply(m), endsBG.apply(m))
+          model.selectExamples(activeStarts.apply(m), activeEnds.apply(m))
           var grouping = Set[String]()
           var newInd = 0
 
-          if (clusterIndexBG.apply(m) > 0) {
+          if (activeClusterIndex.apply(m) > 0) {
             //lastLocked should not be updated because no more new clusters need to be unlocked
           } else {
             breakable {
-              for (g <- clusterGroupingBG) {
+              for (g <- activeClusterGrouping) {
                 if (g.contains(m)) {
                   grouping = g
                   break
@@ -469,30 +514,33 @@ class InductionRunner extends Runnable {
             var groupingNoM = grouping - m
             breakable {
               for (m2 <- groupingNoM) { //grouping-m
-                if (clusterIndexBG.apply(m2) > 0) {
-                  newInd = clusterIndexBG.apply(m2)
+                if (activeClusterIndex.apply(m2) > 0) {
+                  newInd = activeClusterIndex.apply(m2)
                   break
                 }
               }
             }
             if (newInd == 0) {
               for (m3 <- grouping) { //all morphems in the group
-                clusterIndexBG += (m3 -> lastLocked)
+                activeClusterIndex += (m3 -> lastLocked)
               }
               lastLocked += 1
             } else {
               for (m3 <- grouping) { //all morphems in the group
-                clusterIndexBG += (m3 -> newInd)
+                activeClusterIndex += (m3 -> newInd)
               }
             }
           }
 
-          model.stageGeneral(m, clusterMorphemesBG.apply(m), clusterIndexBG.apply(m), countsType = "sharedCluster",
+          model.stageGeneral(m, activeClusterMorphemes.apply(m), activeClusterIndex.apply(m), countsType = "sharedCluster",
             dilute = opts.diluteValue, normalize = opts.normalize, anchor1 = opts.anchor1,
             UNCCOPAnchorIndex = opts.UNCCOPAnchorIndex, UNCAUXAnchorIndex = opts.UNCAUXAnchorIndex,
             CAUXAnchorIndex = opts.CAUXAnchorIndex, CCOPAnchorIndex = opts.CCOPAnchorIndex,
             PREPAnchorIndex = opts.PREPAnchorIndex, ARTAnchorIndex = opts.ARTAnchorIndex,
-            IRPASTAnchorIndex = opts.IRPASTAnchorIndex, IR3AnchorIndex = opts.IR3AnchorIndex)
+            IRPASTAnchorIndex = opts.IRPASTAnchorIndex, IR3AnchorIndex = opts.IR3AnchorIndex,
+            BGPLUAnchorIndex = opts.BGPLUAnchorIndex, BGDEFAnchorIndex = opts.BGDEFAnchorIndex,
+            BGPRESAnchorIndex = opts.BGPRESAnchorIndex, BGINFAnchorIndex = opts.BGINFAnchorIndex,
+            BGPASTAnchorIndex = opts.BGPASTAnchorIndex, BGPREPAnchorIndex = opts.BGPREPAnchorIndex)
 
           model.learn("stage" + m, opts.stage2)
 
@@ -516,7 +564,7 @@ class InductionRunner extends Runnable {
 //      val nouns = nounsAll.slice(0, opts.nounsNum)
 //      val verbs = verbsAll.slice(0, opts.verbsNum)
 //
-//      model.selectExamples(0, 102828)
+//      model.selectExamples(0, activeInitEnd)
 //      model.stageGeneral("initNOUN", nouns, 0, initStage = true)
 //      model.stageGeneral("initVERB", verbs, 1, initStage = true)
 //      model.lockStates(3, prob.opts.K)

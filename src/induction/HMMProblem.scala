@@ -158,6 +158,8 @@ case class HMMProblem(opts: Options) extends TaggingProblem {
     //Part III extension
     override def selectExamples(start: Int, end: Int): Unit = {
       val oldExamples = examples
+      if (start < 0 || end < start || end > oldExamples.length)
+        fail("Invalid example range [" + start + ", " + end + ") for " + oldExamples.length + " loaded examples")
       examples = oldExamples.slice(start, end)
     }
 
@@ -209,9 +211,10 @@ case class HMMProblem(opts: Options) extends TaggingProblem {
 
       var wis = ListBuffer[Int]()
 
+      val emissionLength = params.emissions(0).getProbs.length
       for (word <- words) {
-        var wi_n = wordIndexer.getIndex(word)
-        if (wi_n < W) { //check if word is in the examples
+        var wi_n = wordIndexer.indexOf(word)
+        if (wi_n >= 0 && wi_n < emissionLength) { // check if word is in the current emission vector
           wis += wi_n;
         }
       }
@@ -227,15 +230,18 @@ case class HMMProblem(opts: Options) extends TaggingProblem {
 
     }
 
-    override def stageGeneral(name: String, words: Array[String], cluster: Int, wordIndexerLength: Int = W,
-                              countsType: String = "entireCluster", dilute: Int = 2, normalize: Boolean = false,
-                              initStage: Boolean = false, anchor1: Boolean = false, UNCCOPAnchorIndex: Int = 0,
-                              UNCAUXAnchorIndex: Int = 0, CAUXAnchorIndex: Int = 0, CCOPAnchorIndex: Int = 0,
-                              PREPAnchorIndex: Int = 0, ARTAnchorIndex: Int = 0, IRPASTAnchorIndex: Int = 0,
-                              IR3AnchorIndex: Int = 0): Unit = {
+    override def stageGeneral(name: String, words: Array[String], cluster: Int, wordIndexerLength: Int,
+                              countsType: String, dilute: Int, normalize: Boolean,
+                              initStage: Boolean, anchor1: Boolean, UNCCOPAnchorIndex: Int,
+                              UNCAUXAnchorIndex: Int, CAUXAnchorIndex: Int, CCOPAnchorIndex: Int,
+                              PREPAnchorIndex: Int, ARTAnchorIndex: Int, IRPASTAnchorIndex: Int,
+                              IR3AnchorIndex: Int, BGPLUAnchorIndex: Int, BGDEFAnchorIndex: Int,
+                              BGPRESAnchorIndex: Int, BGINFAnchorIndex: Int, BGPASTAnchorIndex: Int,
+                              BGPREPAnchorIndex: Int): Unit = {
 
       track("stage" + name + ": ")
-      var wi_length = wordIndexerLength
+      val emissionLength = params.emissions(0).getProbs.length
+      var wi_length = if (wordIndexerLength > 0) wordIndexerLength else emissionLength
       var wis = ListBuffer[Int]()
 
       for (n <- words) {
@@ -248,7 +254,7 @@ case class HMMProblem(opts: Options) extends TaggingProblem {
       var count = 0
 
       if (anchor1 && words.length > 1) {
-        var anchorIndex = name match {
+        val anchorIndex: Int = name match {
           case "UNCCOP" => UNCCOPAnchorIndex
           case "UNCAUX" => UNCAUXAnchorIndex
           case "CAUX" => CAUXAnchorIndex
@@ -257,9 +263,16 @@ case class HMMProblem(opts: Options) extends TaggingProblem {
           case "ART" => ARTAnchorIndex
           case "IRPAST" => IRPASTAnchorIndex
           case "IR3" => IR3AnchorIndex
+          case "BGPLU" => BGPLUAnchorIndex
+          case "BGDEF" => BGDEFAnchorIndex
+          case "BGPRES" => BGPRESAnchorIndex
+          case "BGINF" => BGINFAnchorIndex
+          case "BGPAST" => BGPASTAnchorIndex
+          case "BGPREP" => BGPREPAnchorIndex
+          // case _ => throw _root_.tea.Utils.fail("Unsupported anchor1 stage: " + name)
         }
 
-        var wi = wordIndexer.getIndex(words(anchorIndex))
+        val wi = wordIndexer.indexOf(words(anchorIndex))
 
         if (countsType == "entireCluster") {
           count = wi_length / 1
@@ -269,7 +282,10 @@ case class HMMProblem(opts: Options) extends TaggingProblem {
         }
         track(name + " count: " + count + ", total words in wordIndexer: " + W + ", the anchor is " + words(anchorIndex) + " cluster number: " + cluster)
 
-        params.emissions(cluster).addCount_!(wi, count)
+        if (wi >= 0 && wi < emissionLength)
+          params.emissions(cluster).addCount_!(wi, count)
+        else
+          logs("Skipping missing anchor word for %s: %s", name, words(anchorIndex))
       }
       else {
         if (countsType == "entireCluster") { //cluster is only associated with the morphemes of the current stage
@@ -336,4 +352,3 @@ case class HMMProblem(opts: Options) extends TaggingProblem {
   def newModel = new Model
 
 }
-

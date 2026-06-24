@@ -4,7 +4,21 @@ from itertools import permutations as permut
 
 random.seed(10)
 
-baseline_script = """scala -cp induction.jar induction.Induction -create -modelType hmm -Options.K 10 -Options.stage2.numIters 1 -Options.stage2.online True -Options.onlinePerm False -Options.stage2.miniBatches True -Options.stage2.miniBatchSize 1 -inputFormat raw -Options.inductionType normal -Options.outputExampleFreq 1 -log.msPerLine 10 -log.maxIndLevel 100 """
+dilute_val = 0
+order = 0
+norm = False
+anchor1 = True
+nounsNum = 0
+verbsNum = 0
+BGPLUAnchorIndex = 0
+BGDEFAnchorIndex = 0
+BGPRESAnchorIndex = 0
+BGINFAnchorIndex = 0
+BGPASTAnchorIndex = 0
+BGPREPAnchorIndex = 0
+
+
+baseline_script = """scala -cp induction.jar induction.Induction -create -modelType hmm -Options.K 8 -Options.stage2.numIters 1 -Options.stage2.online True -Options.onlinePerm False -Options.stage2.miniBatches True -Options.stage2.miniBatchSize 1 -inputFormat raw -Options.inductionType normal -Options.outputExampleFreq 1 -log.msPerLine 10 -log.maxIndLevel 100 """
 
 # os.system((baseline_script + """-inputPaths sample-data/sents_normtok_bg_cds_copyrightsafe.raw -execDir outputs/bg/11062025_copyrightok.out -overwrite True"""))
 

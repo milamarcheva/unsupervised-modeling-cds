@@ -7,7 +7,11 @@ Original copyright:
 This version includes modifications made by Mila Marcheva-Nash for research purposes.
 
 Changes made:
-TODO
+- Added Bulgarian-focused research data and corpus variants under `sample-data/bg/`, including copyright-safe inputs and shuffled/stage-ordered morph-lemma tokenised files for category-induction experiments.
+- Extended the induction code with custom `morph`, `mlu`, and `bg` modes plus Bulgarian-specific options for stage ordering, dilution, priming, gradual unlocking, and single-anchor experiments (`src/induction/Options.java`, `src/induction/HMMProblem.scala`).
+- Modified the HMM workflow to better support the repository's experiments, including explicit train/test slicing and automatic emission of current test predictions during training (`src/induction/AProblem.scala`).
+- Added experiment-launch and evaluation tooling that was not in the original release, such as Bulgarian run scripts, output scoring, and statistical analysis utilities (`script_singlemorpheme_bg.py`, `eval_outputs.py`, `*_stats.py`).
+- Updated the build/research packaging around the original toolkit with a JDK 8-oriented `Makefile` and bundled research artefacts such as logs, figures, and a prebuilt `induction.jar`.
 
 The original copyright notice and license terms are retained.
 

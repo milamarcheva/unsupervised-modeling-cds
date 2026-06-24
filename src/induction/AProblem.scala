@@ -22,6 +22,7 @@ trait AProblem {
   trait ModelInterface {
     def readExamples : Unit
     def logStats : Unit
+    def numExamples : Int
     def genExamples : Unit
     def preInit : Unit
     def init(initType:Options.InitType, initRandom:Random) : Unit
@@ -48,7 +49,7 @@ trait AProblem {
     def stageUNCAUX(cluster:Int) : Unit
     def stageCCOP(cluster:Int) : Unit
     def stageCAUX(cluster:Int) : Unit
-    def stageGeneral(name: String, words: Array[String], cluster: Int, wordIndexerLength: Int = 0, countsType: String = "entireCluster", dilute: Int = 2, normalize: Boolean = false, initStage: Boolean = false, anchor1: Boolean = false, UNCCOPAnchorIndex: Int = 0, UNCAUXAnchorIndex: Int = 0, CAUXAnchorIndex: Int = 0, CCOPAnchorIndex: Int = 0, PREPAnchorIndex: Int = 0, ARTAnchorIndex: Int = 0, IRPASTAnchorIndex: Int = 0, IR3AnchorIndex: Int = 0): Unit
+    def stageGeneral(name: String, words: Array[String], cluster: Int, wordIndexerLength: Int = 0, countsType: String = "entireCluster", dilute: Int = 2, normalize: Boolean = false, initStage: Boolean = false, anchor1: Boolean = false, UNCCOPAnchorIndex: Int = 0, UNCAUXAnchorIndex: Int = 0, CAUXAnchorIndex: Int = 0, CCOPAnchorIndex: Int = 0, PREPAnchorIndex: Int = 0, ARTAnchorIndex: Int = 0, IRPASTAnchorIndex: Int = 0, IR3AnchorIndex: Int = 0, BGPLUAnchorIndex: Int = 0, BGDEFAnchorIndex: Int = 0, BGPRESAnchorIndex: Int = 0, BGINFAnchorIndex: Int = 0, BGPASTAnchorIndex: Int = 0, BGPREPAnchorIndex: Int = 0): Unit
     def allEmissionsForWord(puts: (String => Any)) : Any
   }
 
@@ -288,7 +289,8 @@ trait AProblem {
     def newPerformance : Performance
     def tokensToExample(tokens:Array[String], add:(Example=>Any)) : Unit = throw fails("Not supported")
     def newInferState(ex:Example, params:Params, counts:Params, ispec:InferSpec) : InferState
-    def logStats = putLogRec("numExamples", examples.size)
+    def numExamples = if (examples == null) 0 else examples.size
+    def logStats = putLogRec("numExamples", numExamples)
     def genExample : Example
     def genSample(v:ProbVec) = v.sample(opts.genRandom)
     def genExamples (implicit exampleTag : ClassTag[Example]) = {
@@ -324,7 +326,7 @@ trait AProblem {
     def stageUNCAUX(cluster:Int) : Unit = throw fails("Not supported; please override")
     def stageCCOP(cluster:Int) : Unit = throw fails("Not supported; please override")
     def stageCAUX(cluster:Int) : Unit = throw fails("Not supported; please override")
-    def stageGeneral(name: String, words: Array[String], cluster: Int, wordIndexerLength: Int = 0, countsType: String = "entireCluster", dilute: Int = 2, normalize: Boolean = false, initStage: Boolean = false, anchor1: Boolean = false, UNCCOPAnchorIndex: Int = 0, UNCAUXAnchorIndex: Int = 0, CAUXAnchorIndex: Int = 0, CCOPAnchorIndex: Int = 0, PREPAnchorIndex: Int = 0, ARTAnchorIndex: Int = 0, IRPASTAnchorIndex: Int = 0, IR3AnchorIndex: Int = 0): Unit = throw fails("Not supported; please override")
+    def stageGeneral(name: String, words: Array[String], cluster: Int, wordIndexerLength: Int = 0, countsType: String = "entireCluster", dilute: Int = 2, normalize: Boolean = false, initStage: Boolean = false, anchor1: Boolean = false, UNCCOPAnchorIndex: Int = 0, UNCAUXAnchorIndex: Int = 0, CAUXAnchorIndex: Int = 0, CCOPAnchorIndex: Int = 0, PREPAnchorIndex: Int = 0, ARTAnchorIndex: Int = 0, IRPASTAnchorIndex: Int = 0, IR3AnchorIndex: Int = 0, BGPLUAnchorIndex: Int = 0, BGDEFAnchorIndex: Int = 0, BGPRESAnchorIndex: Int = 0, BGINFAnchorIndex: Int = 0, BGPASTAnchorIndex: Int = 0, BGPREPAnchorIndex: Int = 0): Unit = throw fails("Not supported; please override")
     def allEmissionsForWord(puts: (String => Any)) : Any = throw fails("Not supported; please override")
 
     // Part III
@@ -821,6 +823,7 @@ trait AProblem {
 //          })
 //        })
 //      }
+      //if (name == "test") predict_test("test_all", params)
       predict_test("test_all",params)
 
       end_track
