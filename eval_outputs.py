@@ -4,8 +4,9 @@ import math
 import random
 import re
 import sys
-from collections import Counter
+from collections import Counter, defaultdict
 from functools import lru_cache
+from html import escape
 from itertools import combinations
 from pathlib import Path
 
@@ -188,6 +189,71 @@ def mapping_accuracy(system_lines, gold_lines, mode):
     return correct / total if total else 0.0
 
 
+def accuracy_from_mapping(system_lines, gold_lines, mapping):
+    correct = 0
+    total = 0
+    for system_line, gold_line in zip(system_lines, gold_lines):
+        for system_tag, gold_tag in zip(system_line.split(), gold_line.split()):
+            total += 1
+            if mapping.get(system_tag, "UNK") == gold_tag:
+                correct += 1
+    return correct, total, correct / total if total else 0.0
+
+
+def compute_prf(system_lines, gold_lines, mapping):
+    pairs = []
+    for system_line, gold_line in zip(system_lines, gold_lines):
+        for system_tag, gold_tag in zip(system_line.split(), gold_line.split()):
+            pairs.append((mapping.get(system_tag, "UNK"), gold_tag))
+
+    gold_tags = sorted({gold_tag for _, gold_tag in pairs})
+    true_positive = defaultdict(int)
+    false_positive = defaultdict(int)
+    false_negative = defaultdict(int)
+    for predicted_tag, gold_tag in pairs:
+        if predicted_tag == gold_tag:
+            true_positive[gold_tag] += 1
+        else:
+            false_positive[predicted_tag] += 1
+            false_negative[gold_tag] += 1
+
+    per_tag = {}
+    for tag in gold_tags:
+        precision = (
+            true_positive[tag] / (true_positive[tag] + false_positive[tag])
+            if true_positive[tag] + false_positive[tag] > 0
+            else 0.0
+        )
+        recall = (
+            true_positive[tag] / (true_positive[tag] + false_negative[tag])
+            if true_positive[tag] + false_negative[tag] > 0
+            else 0.0
+        )
+        f1 = 2 * precision * recall / (precision + recall) if precision + recall else 0.0
+        per_tag[tag] = (precision * 100.0, recall * 100.0, f1 * 100.0)
+
+    tag_count = len(gold_tags) if gold_tags else 1
+    macro_precision = sum(values[0] for values in per_tag.values()) / tag_count
+    macro_recall = sum(values[1] for values in per_tag.values()) / tag_count
+    macro_f1 = sum(values[2] for values in per_tag.values()) / tag_count
+    return per_tag, (macro_precision, macro_recall, macro_f1)
+
+
+def accuracy_details(system_lines, gold_lines, mapping):
+    correct, total, accuracy = accuracy_from_mapping(system_lines, gold_lines, mapping)
+    per_tag, macro = compute_prf(system_lines, gold_lines, mapping)
+    return {
+        "accuracy": accuracy,
+        "correct": correct,
+        "total": total,
+        "per_tag": per_tag,
+        "macro_precision": macro[0],
+        "macro_recall": macro[1],
+        "macro_f1": macro[2],
+        "mapping": mapping,
+    }
+
+
 def parse_output_map(path: Path):
     metrics = {}
     if not path.is_file():
@@ -206,6 +272,8 @@ def format_value(value):
     if isinstance(value, float):
         if math.isnan(value):
             return "NaN"
+        if value != 0.0 and abs(value) < 1.0e-6:
+            return f"{value:.6e}"
         return f"{value:.6f}"
     return str(value)
 
@@ -369,45 +437,646 @@ def paired_t_test(diffs):
 
 
 def extract_combo(run_name):
-    match = re.search(r"_(\d+_\d+_\d+_\d+_\d+_\d+)\.out$", run_name)
+    match = re.search(
+        r"_(\d+(?:_\d+){5,6})(?:_[A-Za-z]+Stages_order\d+)?\.out$",
+        run_name,
+    )
     return match.group(1) if match else None
 
 
-def evaluate_run(run_dir: Path, gold_lines, line_name=None):
+def extract_order(run_name):
+    match = re.search(r"_order(\d+)\.out$", run_name)
+    return match.group(1) if match else None
+
+
+def evaluate_run(run_dir: Path, gold_lines, line_name=None, group_name=None):
     pred_path, system_lines = choose_prediction_file(run_dir, gold_lines)
     gold_labels = flatten(gold_lines)
     system_labels = flatten(system_lines)
     vi, vi_norm = variation_of_information(gold_labels, system_labels)
-    m2o = mapping_accuracy(system_lines, gold_lines, "many2one")
-    o2o = mapping_accuracy(system_lines, gold_lines, "one2one")
+    matrix, system_tags, gold_tags = build_counts(system_lines, gold_lines)
+    m2o_mapping = learn_many_to_one(matrix, system_tags)
+    o2o_mapping = learn_one_to_one(matrix, system_tags, gold_tags)
+    m2o_details = accuracy_details(system_lines, gold_lines, m2o_mapping)
+    o2o_details = accuracy_details(system_lines, gold_lines, o2o_mapping)
     output_metrics = parse_output_map(run_dir / "output.map")
     return {
         "line": line_name,
+        "group": group_name,
         "run": run_dir.name,
         "combo": extract_combo(run_dir.name),
+        "order": extract_order(run_dir.name),
         "pred_file": pred_path.name,
         "vi": vi,
         "vi_norm": vi_norm,
-        "acc_many2one": m2o,
-        "acc_one2one": o2o,
+        "acc_many2one": m2o_details["accuracy"],
+        "acc_one2one": o2o_details["accuracy"],
         "train_logZ": output_metrics.get("train.logZ"),
+        "_accuracy_analysis": {
+            "many2one": m2o_details,
+            "one2one": o2o_details,
+        },
     }
 
 
-def summarize_by_line(rows):
+def summarize_by(rows, group_column):
     summary_rows = []
-    line_names = sorted({row["line"] for row in rows if row.get("line") is not None})
-    for line_name in line_names:
-        line_rows = [row for row in rows if row.get("line") == line_name]
-        summary = {"line": line_name, "n_runs": len(line_rows)}
+    group_names = sorted(
+        {row[group_column] for row in rows if row.get(group_column) is not None}
+    )
+    for group_name in group_names:
+        group_rows = [row for row in rows if row.get(group_column) == group_name]
+        summary = {group_column: group_name, "n_runs": len(group_rows)}
         for metric in NUMERIC_METRICS:
-            values = [to_float(row.get(metric)) for row in line_rows]
+            values = [to_float(row.get(metric)) for row in group_rows]
             values = [value for value in values if value is not None]
             stats = distribution_stats(values)
             for stat_name, stat_value in stats.items():
                 summary[f"{metric}_{stat_name}"] = stat_value
         summary_rows.append(summary)
     return summary_rows
+
+
+def summarize_by_line(rows):
+    return summarize_by(rows, "line")
+
+
+def sort_tag_key(tag):
+    try:
+        return (0, int(tag))
+    except (TypeError, ValueError):
+        return (1, str(tag))
+
+
+def ordered_tags(tags, preferred_order=None):
+    tag_set = set(tags)
+    if not preferred_order:
+        return sorted(tag_set, key=sort_tag_key)
+    ordered = [tag for tag in preferred_order if tag in tag_set]
+    ordered.extend(tag for tag in sorted(tag_set, key=sort_tag_key) if tag not in ordered)
+    return ordered
+
+
+def compute_src_majority(mapping_counts):
+    src_majority = {}
+    for src, tgt_counts in mapping_counts.items():
+        if tgt_counts:
+            src_majority[src] = max(
+                tgt_counts.items(),
+                key=lambda item: (item[1], str(item[0])),
+            )[0]
+    return src_majority
+
+
+def aggregate_by_src_label(mapping_counts, src_majority):
+    aggregated = defaultdict(lambda: defaultdict(int))
+    for src, tgt_counts in mapping_counts.items():
+        src_label = src_majority.get(src)
+        if src_label is None:
+            continue
+        for tgt, count in tgt_counts.items():
+            aggregated[src_label][tgt] += count
+    return aggregated
+
+
+def accuracy_analysis_tables(rows, group_column, preferred_tag_order=None):
+    macro_rows = []
+    per_tag_rows = []
+    mapping_rows = []
+    label_mapping_rows = []
+    group_names = sorted(
+        {row[group_column] for row in rows if row.get(group_column) is not None}
+    )
+
+    for group_name in group_names:
+        group_rows = [row for row in rows if row.get(group_column) == group_name]
+        for mode in ("many2one", "one2one"):
+            analyses = [
+                row["_accuracy_analysis"][mode]
+                for row in group_rows
+                if row.get("_accuracy_analysis", {}).get(mode)
+            ]
+            if not analyses:
+                continue
+
+            accuracy_stats = distribution_stats(
+                [analysis["accuracy"] for analysis in analyses]
+            )
+            macro_precision_stats = distribution_stats(
+                [analysis["macro_precision"] for analysis in analyses]
+            )
+            macro_recall_stats = distribution_stats(
+                [analysis["macro_recall"] for analysis in analyses]
+            )
+            macro_f1_stats = distribution_stats(
+                [analysis["macro_f1"] for analysis in analyses]
+            )
+            total_correct = sum(analysis["correct"] for analysis in analyses)
+            total_tokens = sum(analysis["total"] for analysis in analyses)
+            macro_rows.append(
+                {
+                    group_column: group_name,
+                    "mode": mode,
+                    "n_runs": len(analyses),
+                    "total_correct": total_correct,
+                    "total_tokens": total_tokens,
+                    "micro_accuracy": total_correct / total_tokens if total_tokens else None,
+                    "accuracy_mean": accuracy_stats["mean"],
+                    "accuracy_sd": accuracy_stats["sd"],
+                    "accuracy_median": accuracy_stats["median"],
+                    "macro_precision_mean": macro_precision_stats["mean"],
+                    "macro_precision_sd": macro_precision_stats["sd"],
+                    "macro_precision_median": macro_precision_stats["median"],
+                    "macro_recall_mean": macro_recall_stats["mean"],
+                    "macro_recall_sd": macro_recall_stats["sd"],
+                    "macro_recall_median": macro_recall_stats["median"],
+                    "macro_f1_mean": macro_f1_stats["mean"],
+                    "macro_f1_sd": macro_f1_stats["sd"],
+                    "macro_f1_median": macro_f1_stats["median"],
+                }
+            )
+
+            tag_values = defaultdict(lambda: {"precision": [], "recall": [], "f1": []})
+            for analysis in analyses:
+                for tag, (precision, recall, f1) in analysis["per_tag"].items():
+                    tag_values[tag]["precision"].append(precision)
+                    tag_values[tag]["recall"].append(recall)
+                    tag_values[tag]["f1"].append(f1)
+            for tag in ordered_tags(tag_values, preferred_tag_order):
+                precision_stats = distribution_stats(tag_values[tag]["precision"])
+                recall_stats = distribution_stats(tag_values[tag]["recall"])
+                f1_stats = distribution_stats(tag_values[tag]["f1"])
+                per_tag_rows.append(
+                    {
+                        group_column: group_name,
+                        "mode": mode,
+                        "tag": tag,
+                        "n_runs": precision_stats["n"],
+                        "precision_mean": precision_stats["mean"],
+                        "precision_sd": precision_stats["sd"],
+                        "precision_median": precision_stats["median"],
+                        "recall_mean": recall_stats["mean"],
+                        "recall_sd": recall_stats["sd"],
+                        "recall_median": recall_stats["median"],
+                        "f1_mean": f1_stats["mean"],
+                        "f1_sd": f1_stats["sd"],
+                        "f1_median": f1_stats["median"],
+                    }
+                )
+
+            mapping_counts = defaultdict(lambda: defaultdict(int))
+            for analysis in analyses:
+                for src, tgt in analysis["mapping"].items():
+                    mapping_counts[src][tgt] += 1
+            src_majority = compute_src_majority(mapping_counts)
+            for src in sorted(mapping_counts, key=sort_tag_key):
+                tgt_counts = mapping_counts[src]
+                for tgt, count in sorted(
+                    tgt_counts.items(),
+                    key=lambda item: (-item[1], sort_tag_key(item[0])),
+                ):
+                    mapping_rows.append(
+                        {
+                            group_column: group_name,
+                            "mode": mode,
+                            "system_tag": src,
+                            "system_majority_label": src_majority.get(src),
+                            "gold_tag": tgt,
+                            "count": count,
+                        }
+                    )
+
+            label_counts = aggregate_by_src_label(mapping_counts, src_majority)
+            for src_label in ordered_tags(label_counts, preferred_tag_order):
+                tgt_counts = label_counts[src_label]
+                for tgt, count in sorted(
+                    tgt_counts.items(),
+                    key=lambda item: (-item[1], sort_tag_key(item[0])),
+                ):
+                    label_mapping_rows.append(
+                        {
+                            group_column: group_name,
+                            "mode": mode,
+                            "system_majority_label": src_label,
+                            "gold_tag": tgt,
+                            "count": count,
+                        }
+                    )
+
+    return macro_rows, per_tag_rows, mapping_rows, label_mapping_rows
+
+
+def average_ranks(values):
+    indexed = sorted(enumerate(values), key=lambda item: item[1])
+    ranks = [0.0] * len(values)
+    tie_counts = []
+    index = 0
+    while index < len(indexed):
+        end = index + 1
+        while end < len(indexed) and indexed[end][1] == indexed[index][1]:
+            end += 1
+        average_rank = ((index + 1) + end) / 2.0
+        for original_index, _ in indexed[index:end]:
+            ranks[original_index] = average_rank
+        if end - index > 1:
+            tie_counts.append(end - index)
+        index = end
+    return ranks, tie_counts
+
+
+def mann_whitney_u_test(values_a, values_b):
+    values_a = [value for value in values_a if value is not None]
+    values_b = [value for value in values_b if value is not None]
+    n_a = len(values_a)
+    n_b = len(values_b)
+    if not values_a or not values_b:
+        return {
+            "n_a": n_a,
+            "n_b": n_b,
+            "u_a": None,
+            "u_b": None,
+            "u_min": None,
+            "z": None,
+            "p_two_sided_mann_whitney": None,
+        }
+
+    pooled_values = values_a + values_b
+    ranks, tie_counts = average_ranks(pooled_values)
+    rank_sum_a = sum(ranks[:n_a])
+    u_a = rank_sum_a - (n_a * (n_a + 1) / 2.0)
+    u_b = n_a * n_b - u_a
+    u_min = min(u_a, u_b)
+
+    total_n = n_a + n_b
+    mean_u = n_a * n_b / 2.0
+    tie_sum = sum(tie_count ** 3 - tie_count for tie_count in tie_counts)
+    variance = (n_a * n_b / 12.0) * (
+        (total_n + 1) - (tie_sum / (total_n * (total_n - 1)))
+    )
+    if variance <= 0:
+        z_value = None
+        p_value = None
+    else:
+        z_value = (u_a - mean_u) / math.sqrt(variance)
+        p_value = math.erfc(abs(z_value) / math.sqrt(2.0))
+
+    return {
+        "n_a": n_a,
+        "n_b": n_b,
+        "u_a": u_a,
+        "u_b": u_b,
+        "u_min": u_min,
+        "z": z_value,
+        "p_two_sided_mann_whitney": p_value,
+    }
+
+
+def mann_whitney_group_tests(rows, group_column):
+    group_names = sorted(
+        {row[group_column] for row in rows if row.get(group_column) is not None}
+    )
+    test_rows = []
+    for group_a, group_b in combinations(group_names, 2):
+        rows_a = [row for row in rows if row.get(group_column) == group_a]
+        rows_b = [row for row in rows if row.get(group_column) == group_b]
+        for metric in NUMERIC_METRICS:
+            values_a = [to_float(row.get(metric)) for row in rows_a]
+            values_a = [value for value in values_a if value is not None]
+            values_b = [to_float(row.get(metric)) for row in rows_b]
+            values_b = [value for value in values_b if value is not None]
+            stats_a = distribution_stats(values_a)
+            stats_b = distribution_stats(values_b)
+            test = mann_whitney_u_test(values_a, values_b)
+            test_rows.append(
+                {
+                    f"{group_column}_a": group_a,
+                    f"{group_column}_b": group_b,
+                    "metric": metric,
+                    "n_a": test["n_a"],
+                    "n_b": test["n_b"],
+                    "mean_a": stats_a["mean"],
+                    "mean_b": stats_b["mean"],
+                    "median_a": stats_a["median"],
+                    "median_b": stats_b["median"],
+                    "u_a": test["u_a"],
+                    "u_b": test["u_b"],
+                    "u_min": test["u_min"],
+                    "z": test["z"],
+                    "p_two_sided_mann_whitney": test["p_two_sided_mann_whitney"],
+                    "paired_on": "none",
+                    "test": "Mann-Whitney U; normal approximation with tie correction",
+                }
+            )
+    return test_rows
+
+
+def histogram_rows(rows, group_column, bins):
+    if bins <= 0:
+        raise ValueError("--hist-bins must be greater than 0")
+    group_names = sorted(
+        {row[group_column] for row in rows if row.get(group_column) is not None}
+    )
+    result_rows = []
+    for metric in NUMERIC_METRICS:
+        metric_values = []
+        by_group = {}
+        for group_name in group_names:
+            values = [
+                to_float(row.get(metric))
+                for row in rows
+                if row.get(group_column) == group_name
+            ]
+            values = [value for value in values if value is not None]
+            by_group[group_name] = values
+            metric_values.extend(values)
+        if not metric_values:
+            continue
+
+        min_value = min(metric_values)
+        max_value = max(metric_values)
+        if min_value == max_value:
+            start_value = min_value - 0.5
+            width = 1.0 / bins
+        else:
+            start_value = min_value
+            width = (max_value - min_value) / bins
+
+        for group_name, values in by_group.items():
+            counts = [0] * bins
+            for value in values:
+                if min_value == max_value:
+                    bin_index = bins // 2
+                elif value == max_value:
+                    bin_index = bins - 1
+                else:
+                    bin_index = int((value - start_value) / width)
+                    bin_index = min(max(bin_index, 0), bins - 1)
+                counts[bin_index] += 1
+            for bin_index, count in enumerate(counts):
+                bin_start = start_value + bin_index * width
+                result_rows.append(
+                    {
+                        "metric": metric,
+                        group_column: group_name,
+                        "bin_index": bin_index,
+                        "bin_start": bin_start,
+                        "bin_end": bin_start + width,
+                        "count": count,
+                    }
+                )
+    return result_rows
+
+
+def histogram_counts_by_group(rows, group_column, metric, bins):
+    group_names = sorted(
+        {row[group_column] for row in rows if row.get(group_column) is not None}
+    )
+    values_by_group = {}
+    metric_values = []
+    for group_name in group_names:
+        values = [
+            to_float(row.get(metric))
+            for row in rows
+            if row.get(group_column) == group_name
+        ]
+        values = [value for value in values if value is not None]
+        if values:
+            values_by_group[group_name] = values
+            metric_values.extend(values)
+    if len(values_by_group) < 2:
+        return None
+
+    min_value = min(metric_values)
+    max_value = max(metric_values)
+    if min_value == max_value:
+        start_value = min_value - 0.5
+        width = 1.0 / bins
+    else:
+        start_value = min_value
+        width = (max_value - min_value) / bins
+
+    counts_by_group = {}
+    for group_name, values in values_by_group.items():
+        counts = [0] * bins
+        for value in values:
+            if min_value == max_value:
+                bin_index = bins // 2
+            elif value == max_value:
+                bin_index = bins - 1
+            else:
+                bin_index = int((value - start_value) / width)
+                bin_index = min(max(bin_index, 0), bins - 1)
+            counts[bin_index] += 1
+        counts_by_group[group_name] = counts
+
+    return {
+        "counts_by_group": counts_by_group,
+        "start_value": start_value,
+        "width": width,
+        "min_value": min_value,
+        "max_value": max_value,
+        "max_count": max(max(counts) for counts in counts_by_group.values()),
+    }
+
+
+def write_histogram_svg_plots(rows, group_column, bins, hist_dir):
+    output_dir = Path(hist_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    colors = ["#2563eb", "#dc2626", "#059669", "#d97706", "#7c3aed", "#0891b2"]
+    canvas_width = 900
+    canvas_height = 540
+    margin_left = 78
+    margin_right = 24
+    margin_top = 54
+    margin_bottom = 78
+    plot_width = canvas_width - margin_left - margin_right
+    plot_height = canvas_height - margin_top - margin_bottom
+
+    for metric in NUMERIC_METRICS:
+        histogram = histogram_counts_by_group(rows, group_column, metric, bins)
+        if histogram is None:
+            continue
+
+        counts_by_group = histogram["counts_by_group"]
+        max_count = histogram["max_count"] or 1
+        bin_width = plot_width / bins
+        group_count = len(counts_by_group)
+        bar_width = max(1.0, (bin_width / group_count) * 0.86)
+        elements = [
+            (
+                f'<svg xmlns="http://www.w3.org/2000/svg" '
+                f'width="{canvas_width}" height="{canvas_height}" '
+                f'viewBox="0 0 {canvas_width} {canvas_height}">'
+            ),
+            '<rect width="100%" height="100%" fill="white"/>',
+            (
+                f'<text x="{canvas_width / 2}" y="28" text-anchor="middle" '
+                f'font-family="Helvetica, Arial, sans-serif" font-size="20" '
+                f'font-weight="700">{escape(metric)} histogram</text>'
+            ),
+            (
+                f'<line x1="{margin_left}" y1="{margin_top + plot_height}" '
+                f'x2="{margin_left + plot_width}" y2="{margin_top + plot_height}" '
+                f'stroke="#111827" stroke-width="1.5"/>'
+            ),
+            (
+                f'<line x1="{margin_left}" y1="{margin_top}" '
+                f'x2="{margin_left}" y2="{margin_top + plot_height}" '
+                f'stroke="#111827" stroke-width="1.5"/>'
+            ),
+        ]
+
+        for tick in range(6):
+            y_value = max_count * tick / 5.0
+            y_pos = margin_top + plot_height - (y_value / max_count) * plot_height
+            elements.extend(
+                [
+                    (
+                        f'<line x1="{margin_left - 5}" y1="{y_pos:.2f}" '
+                        f'x2="{margin_left}" y2="{y_pos:.2f}" stroke="#111827"/>'
+                    ),
+                    (
+                        f'<text x="{margin_left - 10}" y="{y_pos + 4:.2f}" '
+                        f'text-anchor="end" font-family="Helvetica, Arial, sans-serif" '
+                        f'font-size="11">{y_value:.0f}</text>'
+                    ),
+                    (
+                        f'<line x1="{margin_left}" y1="{y_pos:.2f}" '
+                        f'x2="{margin_left + plot_width}" y2="{y_pos:.2f}" '
+                        f'stroke="#e5e7eb" stroke-width="1"/>'
+                    ),
+                ]
+            )
+
+        for tick in range(6):
+            x_value = histogram["start_value"] + histogram["width"] * bins * tick / 5.0
+            x_pos = margin_left + plot_width * tick / 5.0
+            elements.extend(
+                [
+                    (
+                        f'<line x1="{x_pos:.2f}" y1="{margin_top + plot_height}" '
+                        f'x2="{x_pos:.2f}" y2="{margin_top + plot_height + 5}" '
+                        f'stroke="#111827"/>'
+                    ),
+                    (
+                        f'<text x="{x_pos:.2f}" y="{margin_top + plot_height + 22}" '
+                        f'text-anchor="middle" font-family="Helvetica, Arial, sans-serif" '
+                        f'font-size="11">{x_value:.3f}</text>'
+                    ),
+                ]
+            )
+
+        for group_index, (group_name, counts) in enumerate(counts_by_group.items()):
+            color = colors[group_index % len(colors)]
+            for bin_index, count in enumerate(counts):
+                if count == 0:
+                    continue
+                bar_height = (count / max_count) * plot_height
+                x_pos = margin_left + bin_index * bin_width + group_index * bar_width
+                y_pos = margin_top + plot_height - bar_height
+                elements.append(
+                    (
+                        f'<rect x="{x_pos:.2f}" y="{y_pos:.2f}" '
+                        f'width="{bar_width:.2f}" height="{bar_height:.2f}" '
+                        f'fill="{color}" opacity="0.62"/>'
+                    )
+                )
+
+        legend_x = margin_left + plot_width - 170
+        legend_y = margin_top + 8
+        for group_index, group_name in enumerate(counts_by_group):
+            color = colors[group_index % len(colors)]
+            y_pos = legend_y + group_index * 22
+            elements.extend(
+                [
+                    (
+                        f'<rect x="{legend_x}" y="{y_pos}" width="14" height="14" '
+                        f'fill="{color}" opacity="0.62"/>'
+                    ),
+                    (
+                        f'<text x="{legend_x + 20}" y="{y_pos + 12}" '
+                        f'font-family="Helvetica, Arial, sans-serif" font-size="12">'
+                        f'{escape(group_name)}</text>'
+                    ),
+                ]
+            )
+
+        elements.extend(
+            [
+                (
+                    f'<text x="{margin_left + plot_width / 2}" '
+                    f'y="{canvas_height - 18}" text-anchor="middle" '
+                    f'font-family="Helvetica, Arial, sans-serif" font-size="13">'
+                    f'{escape(metric)}</text>'
+                ),
+                (
+                    f'<text x="18" y="{margin_top + plot_height / 2}" '
+                    f'text-anchor="middle" transform="rotate(-90 18 '
+                    f'{margin_top + plot_height / 2})" '
+                    f'font-family="Helvetica, Arial, sans-serif" font-size="13">'
+                    f'run count</text>'
+                ),
+                "</svg>",
+            ]
+        )
+        (output_dir / f"{metric}_hist.svg").write_text(
+            "\n".join(elements) + "\n",
+            encoding="utf-8",
+        )
+
+
+def write_histogram_plots(rows, group_column, bins, hist_dir):
+    try:
+        import matplotlib
+
+        matplotlib.use("Agg")
+        import matplotlib.pyplot as plt
+    except ImportError:
+        print(
+            "warning: matplotlib is not installed; wrote SVG histograms instead",
+            file=sys.stderr,
+        )
+        write_histogram_svg_plots(rows, group_column, bins, hist_dir)
+        return
+
+    output_dir = Path(hist_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    group_names = sorted(
+        {row[group_column] for row in rows if row.get(group_column) is not None}
+    )
+    for metric in NUMERIC_METRICS:
+        values_by_group = {}
+        for group_name in group_names:
+            values = [
+                to_float(row.get(metric))
+                for row in rows
+                if row.get(group_column) == group_name
+            ]
+            values = [value for value in values if value is not None]
+            if values:
+                values_by_group[group_name] = values
+        if len(values_by_group) < 2:
+            continue
+
+        plt.figure(figsize=(8, 5))
+        for group_name, values in values_by_group.items():
+            plt.hist(
+                values,
+                bins=bins,
+                edgecolor="black",
+                alpha=0.45,
+                label=group_name,
+            )
+        # plt.title(f"{metric}: {' vs '.join(values_by_group)}")
+        if metric == "train_logZ":
+            plt.xlabel(f"Final LL")
+        else: 
+            plt.xlabel(f"Final {metric}")       
+        plt.legend()
+        plt.tight_layout()
+        plt.savefig(output_dir / f"{metric}_hist.png", dpi=160)
+        plt.close()
+
 
 
 def sign_flip_pvalue(diffs, samples, seed):
@@ -495,6 +1164,93 @@ def default_sidecar_path(output_path, suffix):
     return str(path.with_name(f"{path.stem}_{suffix}{path.suffix or '.tsv'}"))
 
 
+def default_sidecar_prefix(output_path, suffix):
+    if not output_path:
+        return None
+    path = Path(output_path)
+    return str(path.with_name(f"{path.stem}_{suffix}"))
+
+
+def sidecar_from_prefix(prefix, suffix):
+    path = Path(prefix)
+    return str(path.with_name(f"{path.name}_{suffix}.tsv"))
+
+
+def write_accuracy_analysis_outputs(rows, group_column, prefix, preferred_tag_order=None):
+    macro_rows, per_tag_rows, mapping_rows, label_mapping_rows = accuracy_analysis_tables(
+        rows,
+        group_column,
+        preferred_tag_order=preferred_tag_order,
+    )
+    group_header = [group_column]
+    write_rows(
+        macro_rows,
+        group_header
+        + [
+            "mode",
+            "n_runs",
+            "total_correct",
+            "total_tokens",
+            "micro_accuracy",
+            "accuracy_mean",
+            "accuracy_sd",
+            "accuracy_median",
+            "macro_precision_mean",
+            "macro_precision_sd",
+            "macro_precision_median",
+            "macro_recall_mean",
+            "macro_recall_sd",
+            "macro_recall_median",
+            "macro_f1_mean",
+            "macro_f1_sd",
+            "macro_f1_median",
+        ],
+        sidecar_from_prefix(prefix, "macro"),
+    )
+    write_rows(
+        per_tag_rows,
+        group_header
+        + [
+            "mode",
+            "tag",
+            "n_runs",
+            "precision_mean",
+            "precision_sd",
+            "precision_median",
+            "recall_mean",
+            "recall_sd",
+            "recall_median",
+            "f1_mean",
+            "f1_sd",
+            "f1_median",
+        ],
+        sidecar_from_prefix(prefix, "per_tag_prf"),
+    )
+    write_rows(
+        mapping_rows,
+        group_header
+        + [
+            "mode",
+            "system_tag",
+            "system_majority_label",
+            "gold_tag",
+            "count",
+        ],
+        sidecar_from_prefix(prefix, "mapping_counts"),
+    )
+    write_rows(
+        label_mapping_rows,
+        group_header
+        + [
+            "mode",
+            "system_majority_label",
+            "gold_tag",
+            "count",
+        ],
+        sidecar_from_prefix(prefix, "label_mapping_counts"),
+    )
+
+
 def parse_lines_arg(lines_arg):
     if lines_arg is None:
         return None
@@ -507,6 +1263,17 @@ def parse_lines_arg(lines_arg):
             item = f"line{item}"
         line_names.append(item)
     return line_names
+
+
+def parse_groups_arg(groups_arg):
+    if groups_arg is None:
+        return None
+    group_names = []
+    for raw_item in groups_arg.split(","):
+        item = raw_item.strip()
+        if item:
+            group_names.append(item)
+    return group_names
 
 
 def iter_run_dirs(outputs_root: Path, line_names):
@@ -522,6 +1289,16 @@ def iter_run_dirs(outputs_root: Path, line_names):
             continue
         for run_dir in sorted(path for path in line_dir.iterdir() if path.is_dir()):
             yield line_name, run_dir
+
+
+def iter_group_run_dirs(outputs_root: Path, group_names):
+    for group_name in group_names:
+        group_dir = outputs_root / group_name
+        if not group_dir.is_dir():
+            print(f"warning: missing group directory: {group_dir}", file=sys.stderr)
+            continue
+        for run_dir in sorted(path for path in group_dir.iterdir() if path.is_dir()):
+            yield group_name, run_dir
 
 
 def write_rows(rows, header, output_path=None):
@@ -557,6 +1334,16 @@ def main():
         ),
     )
     parser.add_argument(
+        "--groups",
+        nargs="?",
+        const="compliant,noncompliant",
+        default=None,
+        help=(
+            "Evaluate nested runs under comma-separated group directories. "
+            "Pass without a value for compliant,noncompliant."
+        ),
+    )
+    parser.add_argument(
         "--strict",
         action="store_true",
         help="Abort on the first missing or unaligned run instead of skipping with a warning.",
@@ -568,8 +1355,8 @@ def main():
         const="",
         default=None,
         help=(
-            "Write per-line mean/sd TSV. In --lines mode with --out, defaults to "
-            "<out>_summary.tsv. Pass an explicit path to override."
+            "Write per-line or per-group summary TSV. In --lines/--groups mode "
+            "with --out, defaults to <out>_summary.tsv. Pass an explicit path to override."
         ),
     )
     parser.add_argument(
@@ -583,6 +1370,54 @@ def main():
         ),
     )
     parser.add_argument(
+        "--mann-whitney-out",
+        nargs="?",
+        const="",
+        default=None,
+        help=(
+            "Write Mann-Whitney U group-comparison TSV. In --groups mode with --out, "
+            "defaults to <out>_mann_whitney.tsv. Pass an explicit path to override."
+        ),
+    )
+    parser.add_argument(
+        "--hist-out",
+        nargs="?",
+        const="",
+        default=None,
+        help=(
+            "Write histogram bin-count TSV. In --groups mode with --out, defaults to "
+            "<out>_hist.tsv. Pass an explicit path to override."
+        ),
+    )
+    parser.add_argument(
+        "--hist-bins",
+        type=int,
+        default=50,
+        help="Number of bins for histogram TSVs and optional plots.",
+    )
+    parser.add_argument(
+        "--hist-dir",
+        help=(
+            "Optionally write overlay histogram plots to this directory. "
+            "Writes PNGs with matplotlib, otherwise SVGs."
+        ),
+    )
+    parser.add_argument(
+        "--accuracy-analysis-out",
+        nargs="?",
+        const="",
+        default=None,
+        help=(
+            "Write script_accuracy_python-style macro, per-tag PRF, mapping-count, "
+            "and label-mapping TSVs using this output prefix. Pass without a value "
+            "with --out to default to <out>_accuracy."
+        ),
+    )
+    parser.add_argument(
+        "--tag-order",
+        help="Optional comma-separated display order for per-tag PRF and label mappings.",
+    )
+    parser.add_argument(
         "--paired-samples",
         type=int,
         default=10000,
@@ -590,27 +1425,44 @@ def main():
     )
     parser.add_argument("--paired-seed", type=int, default=1)
     args = parser.parse_args()
+    if args.lines is not None and args.groups is not None:
+        parser.error("--lines and --groups cannot be used together")
 
     outputs_root = Path(args.outputs_root)
     gold_path = Path(args.gold)
     gold_lines = read_lines(gold_path)
     line_names = parse_lines_arg(args.lines)
+    group_names = parse_groups_arg(args.groups)
 
     rows = []
     skipped = 0
-    for line_name, run_dir in iter_run_dirs(outputs_root, line_names):
-        try:
-            rows.append(evaluate_run(run_dir, gold_lines, line_name=line_name))
-        except (FileNotFoundError, ValueError) as error:
-            if args.strict:
-                raise
-            skipped += 1
-            print(f"warning: skipped {run_dir}: {error}", file=sys.stderr)
+    if group_names is not None:
+        for group_name, run_dir in iter_group_run_dirs(outputs_root, group_names):
+            try:
+                rows.append(
+                    evaluate_run(run_dir, gold_lines, group_name=group_name)
+                )
+            except (FileNotFoundError, ValueError) as error:
+                if args.strict:
+                    raise
+                skipped += 1
+                print(f"warning: skipped {run_dir}: {error}", file=sys.stderr)
+    else:
+        for line_name, run_dir in iter_run_dirs(outputs_root, line_names):
+            try:
+                rows.append(evaluate_run(run_dir, gold_lines, line_name=line_name))
+            except (FileNotFoundError, ValueError) as error:
+                if args.strict:
+                    raise
+                skipped += 1
+                print(f"warning: skipped {run_dir}: {error}", file=sys.stderr)
 
     header = [
         "line",
+        "group",
         "run",
         "combo",
+        "order",
         "pred_file",
         "vi",
         "vi_norm",
@@ -618,20 +1470,26 @@ def main():
         "acc_one2one",
         "train_logZ",
     ]
-    if line_names is None:
-        header = [column for column in header if column not in {"line", "combo"}]
+    if line_names is None and group_names is None:
+        header = [
+            column
+            for column in header
+            if column not in {"line", "group", "combo", "order"}
+        ]
+    elif line_names is not None:
+        header = [column for column in header if column not in {"group", "order"}]
+    elif group_names is not None:
+        header = [column for column in header if column != "line"]
 
     write_rows(rows, header, args.out)
-    if line_names is not None:
+    if line_names is not None or group_names is not None:
         summary_out = args.summary_out
         if summary_out is None and args.out:
             summary_out = default_sidecar_path(args.out, "summary")
-        paired_out = args.paired_out
-        if paired_out is None and args.out:
-            paired_out = default_sidecar_path(args.out, "paired")
 
-        summary_rows = summarize_by_line(rows)
-        summary_header = ["line", "n_runs"]
+        group_column = "line" if line_names is not None else "group"
+        summary_rows = summarize_by(rows, group_column)
+        summary_header = [group_column, "n_runs"]
         for metric in NUMERIC_METRICS:
             summary_header.extend(
                 [
@@ -652,6 +1510,11 @@ def main():
             )
         if summary_out != "":
             write_rows(summary_rows, summary_header, summary_out)
+
+    if line_names is not None:
+        paired_out = args.paired_out
+        if paired_out is None and args.out:
+            paired_out = default_sidecar_path(args.out, "paired")
 
         paired_rows = paired_line_tests(
             rows,
@@ -680,6 +1543,66 @@ def main():
         ]
         if paired_out != "":
             write_rows(paired_rows, paired_header, paired_out)
+
+    if group_names is not None:
+        mann_whitney_out = args.mann_whitney_out
+        if mann_whitney_out is None and args.out:
+            mann_whitney_out = default_sidecar_path(args.out, "mann_whitney")
+        if mann_whitney_out != "":
+            mann_whitney_rows = mann_whitney_group_tests(rows, "group")
+            mann_whitney_header = [
+                "group_a",
+                "group_b",
+                "metric",
+                "n_a",
+                "n_b",
+                "mean_a",
+                "mean_b",
+                "median_a",
+                "median_b",
+                "u_a",
+                "u_b",
+                "u_min",
+                "z",
+                "p_two_sided_mann_whitney",
+                "paired_on",
+                "test",
+            ]
+            write_rows(mann_whitney_rows, mann_whitney_header, mann_whitney_out)
+
+        hist_out = args.hist_out
+        if hist_out is None and args.out:
+            hist_out = default_sidecar_path(args.out, "hist")
+        if hist_out != "":
+            hist_header = ["metric", "group", "bin_index", "bin_start", "bin_end", "count"]
+            write_rows(
+                histogram_rows(rows, "group", args.hist_bins),
+                hist_header,
+                hist_out,
+            )
+        if args.hist_dir:
+            write_histogram_plots(rows, "group", args.hist_bins, args.hist_dir)
+
+    if args.accuracy_analysis_out is not None:
+        if line_names is None and group_names is None:
+            parser.error("--accuracy-analysis-out requires --lines or --groups")
+        accuracy_prefix = args.accuracy_analysis_out
+        if accuracy_prefix == "":
+            if not args.out:
+                parser.error("--accuracy-analysis-out needs a path when --out is not set")
+            accuracy_prefix = default_sidecar_prefix(args.out, "accuracy")
+        group_column = "line" if line_names is not None else "group"
+        preferred_tag_order = (
+            [tag.strip() for tag in args.tag_order.split(",") if tag.strip()]
+            if args.tag_order
+            else None
+        )
+        write_accuracy_analysis_outputs(
+            rows,
+            group_column,
+            accuracy_prefix,
+            preferred_tag_order=preferred_tag_order,
+        )
 
     print(f"evaluated {len(rows)} runs; skipped {skipped}", file=sys.stderr)
 
