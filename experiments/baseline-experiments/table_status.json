@@ -1,0 +1,6 @@
+{
+  "status": "complete",
+  "completed_rows": 8,
+  "required_rows": 8,
+  "primary_metric": "train_logz"
+}

@@ -1,0 +1,12 @@
+{
+  "en": {
+    "original_train_logz": -5.661,
+    "rerun_train_logz": -5.661,
+    "matching_at_saved_precision": true
+  },
+  "bg": {
+    "original_train_logz": -6.731,
+    "rerun_train_logz": -6.731,
+    "matching_at_saved_precision": true
+  }
+}

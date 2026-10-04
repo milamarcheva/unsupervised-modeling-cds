@@ -1,0 +1,17 @@
+main() {
+  Execution directory: /Users/milamarcheva/Downloads/PhDThesis_Mila_01102026/experiments/hmm_iterations_20261004/runs/en_20passes.out
+  Reading examples {
+    /Users/milamarcheva/Desktop/unsupervised-modeling/sample-data/sents_Brown_shuffled_plusTest.raw (0 examples so far)
+  }
+  Stats {
+    numExamples = 296695
+    numTags = 0
+    numStates = 10
+  }
+  Init parameters: random {
+    AParams.output(/Users/milamarcheva/Downloads/PhDThesis_Mila_01102026/experiments/hmm_iterations_20261004/runs/en_20passes.out/init.params)
+  }
+  Train: stage1 [29s, cum. 30s]
+  Train: stage2 {
+    Iteration 0/20: temperature = 1 [32s, cum. 32s]
+    Iteration 1/20: temperature = 1

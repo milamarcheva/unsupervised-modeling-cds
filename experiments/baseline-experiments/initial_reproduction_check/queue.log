@@ -1,0 +1,8 @@
+Starting en: 20 passes, minibatch 1, seed 1
+Queue stopped: en: first pass does not reproduce the original baseline; comparison paused
+Traceback (most recent call last):
+  File "/Users/milamarcheva/Downloads/PhDThesis_Mila_01102026/experiments/hmm_iterations_20261004/run_queue.py", line 255, in <module>
+    run()
+  File "/Users/milamarcheva/Downloads/PhDThesis_Mila_01102026/experiments/hmm_iterations_20261004/run_queue.py", line 211, in run
+    raise RuntimeError(f'{lang}: first pass does not reproduce the original baseline; comparison paused')
+RuntimeError: en: first pass does not reproduce the original baseline; comparison paused

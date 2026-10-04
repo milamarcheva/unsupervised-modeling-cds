@@ -1,0 +1,4 @@
+# Transient local process locks and Python caches
+*.lock
+__pycache__/
+.DS_Store

@@ -1,0 +1,17 @@
+{
+  "token_mismatches": 2,
+  "original": {
+    "many_to_one": 0.3213794368522425,
+    "one_to_one": 0.26524809685407685,
+    "vi": 4.33051207769031,
+    "vi_norm": 0.9177412893578405,
+    "source": "original_saved_baseline"
+  },
+  "rerun": {
+    "many_to_one": 0.3213794368522425,
+    "one_to_one": 0.26524809685407685,
+    "vi": 4.33051207769031,
+    "vi_norm": 0.9177412893578405
+  },
+  "matching_metrics": true
+}

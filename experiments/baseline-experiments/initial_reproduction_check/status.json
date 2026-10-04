@@ -1,0 +1,16 @@
+{
+  "status": "failed",
+  "pid": 96018,
+  "started": "2026-10-04T11:48:21+0100",
+  "languages": {
+    "en": "running",
+    "bg": "queued"
+  },
+  "checkpoints": {
+    "en": [],
+    "bg": []
+  },
+  "active_language": "en",
+  "child_pid": 96019,
+  "error": "en: first pass does not reproduce the original baseline; comparison paused"
+}

@@ -1,0 +1,31 @@
+stats
+	numExamples	296695
+	numTags	0
+	numStates	10
+stage1
+stage2
+	iteration	0
+		train
+			logZ	-5.661
+			logVZ	-7.961
+			logCZ	-2.300
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		test
+			logZ	-5.578
+			logVZ	-7.878
+			logCZ	-2.299
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		current.test
+			logZ	NaN
+			logVZ	NaN
+			logCZ	NaN
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN

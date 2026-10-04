@@ -1,0 +1,39 @@
+main() {
+  Execution directory: /Users/milamarcheva/Downloads/PhDThesis_Mila_01102026/experiments/hmm_iterations_20261004/runs/bg_20passes.out
+  Reading examples {
+    /Users/milamarcheva/Desktop/unsupervised-modeling/sample-data/bg/bg_hmm_tokenised_morphLemma_duplicates_shuffled_seed42_plusTest.txt (0 examples so far) [1.0s, cum. 1.1s]
+  } [1.1s, cum. 1.1s]
+  Stats {
+    numExamples = 239594
+    numTags = 0
+    numStates = 8
+  }
+  Init parameters: random {
+    AParams.output(/Users/milamarcheva/Downloads/PhDThesis_Mila_01102026/experiments/hmm_iterations_20261004/runs/bg_20passes.out/init.params)
+  }
+  Train: stage1 [37s, cum. 38s]
+  Train: stage2 {
+    Iteration 0/20: temperature = 1 [42s, cum. 42s]
+    Iteration 1/20: temperature = 1 [44s, cum. 1m26s]
+    Iteration 2/20: temperature = 1 [45s, cum. 2m12s]
+    Iteration 3/20: temperature = 1 [48s, cum. 3m0s]
+    Iteration 4/20: temperature = 1 [47s, cum. 3m48s]
+    Iteration 5/20: temperature = 1 [48s, cum. 4m36s]
+    Iteration 6/20: temperature = 1 [47s, cum. 5m24s]
+    Iteration 7/20: temperature = 1 [45s, cum. 6m10s]
+    Iteration 8/20: temperature = 1 [46s, cum. 6m56s]
+    Iteration 9/20: temperature = 1 [45s, cum. 7m42s]
+    Iteration 10/20: temperature = 1 [44s, cum. 8m27s]
+    Iteration 11/20: temperature = 1 [46s, cum. 9m13s]
+    Iteration 12/20: temperature = 1 [45s, cum. 9m59s]
+    Iteration 13/20: temperature = 1 [45s, cum. 10m45s]
+    Iteration 14/20: temperature = 1 [44s, cum. 11m29s]
+    Iteration 15/20: temperature = 1 [45s, cum. 12m14s]
+    Iteration 16/20: temperature = 1 [45s, cum. 12m59s]
+    Iteration 17/20: temperature = 1 [46s, cum. 13m46s]
+    Iteration 18/20: temperature = 1 [46s, cum. 14m32s]
+    Iteration 19/20: temperature = 1 [45s, cum. 15m18s]
+    Final
+  } [15m57s, cum. 16m36s]
+} [16m36s]
+Execution directory: /Users/milamarcheva/Downloads/PhDThesis_Mila_01102026/experiments/hmm_iterations_20261004/runs/bg_20passes.out

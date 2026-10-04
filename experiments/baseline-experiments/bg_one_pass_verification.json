@@ -1,0 +1,21 @@
+{
+  "token_mismatches": 0,
+  "token_count": 2385,
+  "matching_contingency": true,
+  "criterion": "Exact gold-category/cluster contingency counts and all three scores must match the saved baseline.",
+  "original": {
+    "many_to_one": 0.31572327044025156,
+    "one_to_one": 0.23228511530398324,
+    "vi": 4.930471643876098,
+    "vi_norm": 0.9260633544068569,
+    "source": "original_saved_baseline"
+  },
+  "rerun": {
+    "many_to_one": 0.31572327044025156,
+    "one_to_one": 0.23228511530398324,
+    "vi": 4.930471643876098,
+    "vi_norm": 0.9260633544068569
+  },
+  "matching_metrics": true,
+  "accepted": true
+}

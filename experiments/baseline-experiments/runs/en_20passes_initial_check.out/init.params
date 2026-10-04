@@ -1,0 +1,231 @@
+S 4	0.100
+S 6	0.100
+S 8	0.100
+S 7	0.100
+S 9	0.100
+S 0	0.100
+S 1	0.100
+S 3	0.100
+S 2	0.100
+S 5	0.100
+
+T 0 5	0.100
+T 0 6	0.100
+T 0 3	0.100
+T 0 0	0.100
+T 0 8	0.100
+T 0 1	0.100
+T 0 2	0.100
+T 0 7	0.100
+T 0 9	0.100
+T 0 4	0.100
+
+T 1 1	0.100
+T 1 4	0.100
+T 1 0	0.100
+T 1 8	0.100
+T 1 7	0.100
+T 1 3	0.100
+T 1 6	0.100
+T 1 9	0.100
+T 1 5	0.100
+T 1 2	0.100
+
+T 2 6	0.100
+T 2 0	0.100
+T 2 5	0.100
+T 2 8	0.100
+T 2 7	0.100
+T 2 9	0.100
+T 2 1	0.100
+T 2 4	0.100
+T 2 3	0.100
+T 2 2	0.100
+
+T 3 8	0.100
+T 3 2	0.100
+T 3 5	0.100
+T 3 7	0.100
+T 3 4	0.100
+T 3 0	0.100
+T 3 1	0.100
+T 3 9	0.100
+T 3 6	0.100
+T 3 3	0.100
+
+T 4 5	0.100
+T 4 7	0.100
+T 4 6	0.100
+T 4 8	0.100
+T 4 4	0.100
+T 4 9	0.100
+T 4 1	0.100
+T 4 3	0.100
+T 4 0	0.100
+T 4 2	0.100
+
+T 5 3	0.100
+T 5 9	0.100
+T 5 2	0.100
+T 5 8	0.100
+T 5 7	0.100
+T 5 6	0.100
+T 5 0	0.100
+T 5 1	0.100
+T 5 4	0.100
+T 5 5	0.100
+
+T 6 5	0.100
+T 6 7	0.100
+T 6 6	0.100
+T 6 3	0.100
+T 6 0	0.100
+T 6 9	0.100
+T 6 2	0.100
+T 6 4	0.100
+T 6 1	0.100
+T 6 8	0.100
+
+T 7 7	0.100
+T 7 3	0.100
+T 7 5	0.100
+T 7 9	0.100
+T 7 4	0.100
+T 7 1	0.100
+T 7 6	0.100
+T 7 2	0.100
+T 7 8	0.100
+T 7 0	0.100
+
+T 8 0	0.100
+T 8 5	0.100
+T 8 2	0.100
+T 8 7	0.100
+T 8 3	0.100
+T 8 1	0.100
+T 8 4	0.100
+T 8 9	0.100
+T 8 8	0.100
+T 8 6	0.100
+
+T 9 7	0.100
+T 9 3	0.100
+T 9 8	0.100
+T 9 0	0.100
+T 9 2	0.100
+T 9 5	0.100
+T 9 9	0.100
+T 9 4	0.100
+T 9 6	0.100
+T 9 1	0.100
+
+E 0 nion	9.92e-05
+E 0 pray	9.92e-05
+E 0 splishysplashy	9.92e-05
+E 0 deflate	9.92e-05
+E 0 felix	9.92e-05
+E 0 saggy	9.92e-05
+E 0 soupy	9.92e-05
+E 0 mommmy	9.92e-05
+E 0 receipt	9.92e-05
+E 0 bridget	9.92e-05
+
+E 1 spaghetti	9.92e-05
+E 1 gopher	9.92e-05
+E 1 mbaby	9.92e-05
+E 1 kuhwekuhwe	9.92e-05
+E 1 quail	9.92e-05
+E 1 kkkpb	9.92e-05
+E 1 operation	9.92e-05
+E 1 nadadab	9.92e-05
+E 1 mhmhmhm	9.92e-05
+E 1 blink	9.92e-05
+
+E 2 danielle	9.92e-05
+E 2 gallon	9.92e-05
+E 2 infection	9.92e-05
+E 2 shush	9.92e-05
+E 2 jealous	9.92e-05
+E 2 flack	9.92e-05
+E 2 rusty	9.92e-05
+E 2 hundred	9.92e-05
+E 2 cutiecutiecute	9.92e-05
+E 2 ehahe	9.92e-05
+
+E 3 collect	9.92e-05
+E 3 katie	9.92e-05
+E 3 clump	9.92e-05
+E 3 tiddywinkle	9.92e-05
+E 3 ahkb	9.92e-05
+E 3 hay	9.92e-05
+E 3 when	9.92e-05
+E 3 velcro	9.92e-05
+E 3 carry	9.92e-05
+E 3 rinse	9.92e-05
+
+E 4 still	9.92e-05
+E 4 kean'll	9.92e-05
+E 4 knucklehead	9.92e-05
+E 4 fin	9.92e-05
+E 4 dare	9.92e-05
+E 4 paris	9.92e-05
+E 4 preschooler	9.92e-05
+E 4 ireland	9.92e-05
+E 4 zam	9.92e-05
+E 4 electric	9.92e-05
+
+E 5 com	9.92e-05
+E 5 joose	9.92e-05
+E 5 thank	9.92e-05
+E 5 deal	9.92e-05
+E 5 huguduguduhb	9.92e-05
+E 5 sneaky	9.92e-05
+E 5 baster	9.92e-05
+E 5 soak	9.92e-05
+E 5 difference	9.92e-05
+E 5 sleigh	9.92e-05
+
+E 6 stump	9.92e-05
+E 6 cat'll	9.92e-05
+E 6 aoowaoob	9.92e-05
+E 6 ballpark	9.92e-05
+E 6 whereabout	9.92e-05
+E 6 pthwth	9.92e-05
+E 6 dustpan	9.92e-05
+E 6 muffler	9.92e-05
+E 6 smokestack	9.92e-05
+E 6 tail	9.92e-05
+
+E 7 publication	9.92e-05
+E 7 chasing	9.92e-05
+E 7 tressel	9.92e-05
+E 7 oyhinginginginge	9.92e-05
+E 7 barne	9.92e-05
+E 7 ducky	9.92e-05
+E 7 closet	9.92e-05
+E 7 rotten	9.92e-05
+E 7 unsticke	9.92e-05
+E 7 expensive	9.92e-05
+
+E 8 laundry	9.92e-05
+E 8 daddy'll	9.92e-05
+E 8 ahahahaha	9.92e-05
+E 8 mum	9.92e-05
+E 8 farmer	9.92e-05
+E 8 aiyaiyaiyaiyab	9.92e-05
+E 8 awfully	9.92e-05
+E 8 rustle	9.92e-05
+E 8 monitor	9.92e-05
+E 8 kitten	9.92e-05
+
+E 9 yummyyummy	9.92e-05
+E 9 l@l	9.92e-05
+E 9 huhb	9.92e-05
+E 9 bedtime	9.92e-05
+E 9 khuh	9.92e-05
+E 9 pull	9.92e-05
+E 9 babble	9.92e-05
+E 9 hossie	9.92e-05
+E 9 w@l	9.92e-05
+E 9 suicide	9.92e-05
+

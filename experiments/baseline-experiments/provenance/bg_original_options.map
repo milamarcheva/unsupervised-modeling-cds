@@ -1,0 +1,188 @@
+Options.stage1.numIters	0
+Options.stage1.online	false
+Options.stage1.incremental	false
+Options.stage1.hardUpdate	false
+Options.stage1.stepSizeOffset	2.0
+Options.stage1.stepSizeReductionPower	0.5
+Options.stage1.mixParamsCounts	false
+Options.stage1.convexCombUpdate	false
+Options.stage1.initTemperature	1.0
+Options.stage1.finalTemperature	1.0
+Options.stage1.smoothing	0.0
+Options.stage1.useVarUpdates	false
+Options.stage1.alignmentModel	m1
+Options.stage1.miniBatches	false
+Options.stage1.miniBatchSize	100
+Options.inputPaths	sample-data/bg/bg_hmm_tokenised_morphLemma_duplicates_shuffled_seed42_plusTest.txt
+Options.inputLists	
+Options.testInputPaths	
+Options.testInputLists	
+Options.inputFileExt	
+Options.inputFileExt2	
+Options.artificialDescriptionPath	
+Options.inputFormat	raw
+Options.maxExamples	2147483647
+Options.testMaxExamples	2147483647
+Options.maxExampleLength	2147483647
+Options.useTagsAsWords	false
+Options.segChars	false
+Options.segBoundary	||
+Options.segPenalty	0.5
+Options.maxExamplesForPhrases	2147483647
+Options.modelType	hmm
+Options.K	8
+Options.maxPhraseLength	5
+Options.alignmentModel	m1
+Options.posteriorThreshold	0.5
+Options.gmmVariance	1.0
+Options.gmmGenRange	10.0
+Options.fixBracketing	false
+Options.fixPreTags	false
+Options.collapseNonTags	false
+Options.pK	5
+Options.useCCMPotentials	false
+Options.ccmDependsOnState	false
+Options.removePunctuation	false
+Options.alignAgreement	true
+Options.fullPredForEval	false
+Options.fullPredRandomBaseline	false
+Options.fullPredRandom	1
+Options.excludedFields	
+Options.excludedEventTypes	
+Options.takeOneOfEventType	false
+Options.treatCatAsSym	false
+Options.useOnlyLabeledExamples	false
+Options.indepEventTypes	0,0
+Options.indepFields	0,0
+Options.newEventTypeFieldPerWord	0,0
+Options.newFieldPerWord	0,0
+Options.oneEventPerExample	0,0
+Options.oneFieldPerEvent	0,0
+Options.includeEventTypeGivenWord	false
+Options.disallowConsecutiveRepeatFields	false
+Options.useEventSalienceModel	false
+Options.useEventTypeDistrib	true
+Options.useFieldSetsOnEventTypes	
+Options.useFieldSets	0,0
+Options.minFieldSetSize	0
+Options.maxFieldSetSize	2147483647
+Options.eventTypeTracks	ALL
+Options.jointEventTypeDecision	false
+Options.includeEventTypeAsSymbol	false
+Options.stemAll	false
+Options.genLabels	0,0
+Options.wordRolesPath	
+Options.useWordRolesOnFields	
+Options.noneEventTypeSmoothing	0.0
+Options.fixedNoneEventTypeProb	NaN
+Options.fixedGenericProb	NaN
+Options.noneFieldSmoothing	0.0
+Options.fieldNameSmoothing	0.0
+Options.discountCatEmissions	false
+Options.andIsPunctuation	false
+Options.onlyBreakOnPunctuation	false
+Options.dontCrossPunctuation	false
+Options.limitFieldLength	false
+Options.oneExamplePerLine	false
+Options.debug	false
+Options.trainStart	0
+Options.trainEnd	239244
+Options.testStart	239244
+Options.testEnd	239594
+Options.initType	random
+Options.initSmoothing	0.01
+Options.initNoise	0.001
+Options.initRandom	1
+Options.onlinePermRandom	1
+Options.onlinePerm	false
+Options.batchSizeNewCounts	1000
+Options.outputIterFreq	1
+Options.outputFullPred	false
+Options.outputCurrentState	true
+Options.outputExampleFreq	1000.0
+Options.outputNumParamsPerVec	2147483647
+Options.computeELogZEntropy	false
+Options.genNumExamples	0
+Options.genMaxTokens	100
+Options.genRandom	1
+Options.genInitRandom	1
+Options.genInitType	supervised
+Options.artNumWords	100
+Options.artAlpha	0.5
+Options.numOutputParams	10
+Options.numThreads	4
+Options.mila	4
+Options.inductionType	normal
+Options.useBG	true
+Options.diluteValue	2
+Options.normalize	false
+Options.order	0
+Options.orderStr	
+Options.priming	true
+Options.gradualUnlocking	true
+Options.grouping	0
+Options.stagingExamplesNum	0
+Options.stagingExamplesFraction	0.0
+Options.onlyNounVerb	false
+Options.nounsNum	75
+Options.verbsNum	53
+Options.anchor1	false
+Options.UNCCOPAnchorIndex	0
+Options.UNCAUXAnchorIndex	0
+Options.CAUXAnchorIndex	0
+Options.CCOPAnchorIndex	0
+Options.PREPAnchorIndex	0
+Options.ARTAnchorIndex	0
+Options.IRPASTAnchorIndex	0
+Options.IR3AnchorIndex	0
+Options.BGPLUAnchorIndex	0
+Options.BGDEFAnchorIndex	0
+Options.BGPRESAnchorIndex	0
+Options.BGINFAnchorIndex	0
+Options.BGPASTAnchorIndex	0
+Options.BGPREPAnchorIndex	0
+log.maxIndLevel	10
+log.msPerLine	1000
+log.file	outputs/bg/20260622/ShuffledNoStagesNoGradualUnlocking.out/log
+log.stdout	true
+log.note	
+log.forcePrint	false
+log.maxPrintErrors	10000
+Options.stage2.numIters	1
+Options.stage2.online	true
+Options.stage2.incremental	false
+Options.stage2.hardUpdate	false
+Options.stage2.stepSizeOffset	2.0
+Options.stage2.stepSizeReductionPower	0.5
+Options.stage2.mixParamsCounts	false
+Options.stage2.convexCombUpdate	false
+Options.stage2.initTemperature	1.0
+Options.stage2.finalTemperature	1.0
+Options.stage2.smoothing	0.0
+Options.stage2.useVarUpdates	false
+Options.stage2.alignmentModel	m1
+Options.stage2.miniBatches	true
+Options.stage2.miniBatchSize	1
+exec.create	true
+exec.monitor	false
+exec.execDir	outputs/bg/20260622/ShuffledNoStagesNoGradualUnlocking.out
+exec.execPoolDir	
+exec.actualExecPoolDir	
+exec.overwriteExecDir	true
+exec.useStandardExecPoolDirStrategy	false
+exec.printOptionsAndExit	false
+exec.miscOptions	
+exec.addToView	
+exec.recordPath	
+exec.charEncoding	
+exec.jarFiles	
+exec.dontInitializeJars	false
+exec.initializeJarsAfterDirCreation	false
+exec.makeThunk	false
+exec.thunkAutoQueue	false
+exec.thunkPriority	0
+exec.thunkMainClassName	
+exec.thunkJavaOpts	
+exec.thunkUseScala	false
+exec.thunkReqMemory	1024
+exec.dontCatchExceptions	false

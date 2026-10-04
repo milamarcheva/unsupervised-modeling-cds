@@ -1,0 +1,522 @@
+stats
+	numExamples	296695
+	numTags	0
+	numStates	10
+stage1
+stage2
+	iteration	0
+		train
+			logZ	-5.661
+			logVZ	-7.961
+			logCZ	-2.300
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		test
+			logZ	-5.578
+			logVZ	-7.878
+			logCZ	-2.299
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		current.test
+			logZ	NaN
+			logVZ	NaN
+			logCZ	NaN
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+	iteration	1
+		train
+			logZ	-5.641
+			logVZ	-7.941
+			logCZ	-2.299
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		test
+			logZ	-5.578
+			logVZ	-7.876
+			logCZ	-2.299
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		current.test
+			logZ	NaN
+			logVZ	NaN
+			logCZ	NaN
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+	iteration	2
+		train
+			logZ	-5.640
+			logVZ	-7.939
+			logCZ	-2.298
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		test
+			logZ	-5.577
+			logVZ	-7.876
+			logCZ	-2.298
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		current.test
+			logZ	NaN
+			logVZ	NaN
+			logCZ	NaN
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+	iteration	3
+		train
+			logZ	-5.640
+			logVZ	-7.938
+			logCZ	-2.298
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		test
+			logZ	-5.577
+			logVZ	-7.875
+			logCZ	-2.298
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		current.test
+			logZ	NaN
+			logVZ	NaN
+			logCZ	NaN
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+	iteration	4
+		train
+			logZ	-5.640
+			logVZ	-7.937
+			logCZ	-2.298
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		test
+			logZ	-5.577
+			logVZ	-7.875
+			logCZ	-2.298
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		current.test
+			logZ	NaN
+			logVZ	NaN
+			logCZ	NaN
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+	iteration	5
+		train
+			logZ	-5.639
+			logVZ	-7.937
+			logCZ	-2.297
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		test
+			logZ	-5.577
+			logVZ	-7.875
+			logCZ	-2.297
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		current.test
+			logZ	NaN
+			logVZ	NaN
+			logCZ	NaN
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+	iteration	6
+		train
+			logZ	-5.639
+			logVZ	-7.936
+			logCZ	-2.297
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		test
+			logZ	-5.577
+			logVZ	-7.874
+			logCZ	-2.297
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		current.test
+			logZ	NaN
+			logVZ	NaN
+			logCZ	NaN
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+	iteration	7
+		train
+			logZ	-5.639
+			logVZ	-7.936
+			logCZ	-2.297
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		test
+			logZ	-5.577
+			logVZ	-7.874
+			logCZ	-2.297
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		current.test
+			logZ	NaN
+			logVZ	NaN
+			logCZ	NaN
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+	iteration	8
+		train
+			logZ	-5.639
+			logVZ	-7.936
+			logCZ	-2.297
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		test
+			logZ	-5.577
+			logVZ	-7.874
+			logCZ	-2.297
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		current.test
+			logZ	NaN
+			logVZ	NaN
+			logCZ	NaN
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+	iteration	9
+		train
+			logZ	-5.639
+			logVZ	-7.936
+			logCZ	-2.297
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		test
+			logZ	-5.577
+			logVZ	-7.874
+			logCZ	-2.297
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		current.test
+			logZ	NaN
+			logVZ	NaN
+			logCZ	NaN
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+	iteration	10
+		train
+			logZ	-5.639
+			logVZ	-7.935
+			logCZ	-2.296
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		test
+			logZ	-5.577
+			logVZ	-7.874
+			logCZ	-2.296
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		current.test
+			logZ	NaN
+			logVZ	NaN
+			logCZ	NaN
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+	iteration	11
+		train
+			logZ	-5.639
+			logVZ	-7.935
+			logCZ	-2.296
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		test
+			logZ	-5.577
+			logVZ	-7.874
+			logCZ	-2.296
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		current.test
+			logZ	NaN
+			logVZ	NaN
+			logCZ	NaN
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+	iteration	12
+		train
+			logZ	-5.639
+			logVZ	-7.935
+			logCZ	-2.296
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		test
+			logZ	-5.577
+			logVZ	-7.873
+			logCZ	-2.296
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		current.test
+			logZ	NaN
+			logVZ	NaN
+			logCZ	NaN
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+	iteration	13
+		train
+			logZ	-5.639
+			logVZ	-7.935
+			logCZ	-2.296
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		test
+			logZ	-5.577
+			logVZ	-7.873
+			logCZ	-2.296
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		current.test
+			logZ	NaN
+			logVZ	NaN
+			logCZ	NaN
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+	iteration	14
+		train
+			logZ	-5.639
+			logVZ	-7.935
+			logCZ	-2.296
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		test
+			logZ	-5.577
+			logVZ	-7.873
+			logCZ	-2.296
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		current.test
+			logZ	NaN
+			logVZ	NaN
+			logCZ	NaN
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+	iteration	15
+		train
+			logZ	-5.639
+			logVZ	-7.934
+			logCZ	-2.296
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		test
+			logZ	-5.577
+			logVZ	-7.873
+			logCZ	-2.296
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		current.test
+			logZ	NaN
+			logVZ	NaN
+			logCZ	NaN
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+	iteration	16
+		train
+			logZ	-5.639
+			logVZ	-7.934
+			logCZ	-2.296
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		test
+			logZ	-5.577
+			logVZ	-7.873
+			logCZ	-2.296
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		current.test
+			logZ	NaN
+			logVZ	NaN
+			logCZ	NaN
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+	iteration	17
+		train
+			logZ	-5.639
+			logVZ	-7.934
+			logCZ	-2.295
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		test
+			logZ	-5.577
+			logVZ	-7.873
+			logCZ	-2.295
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		current.test
+			logZ	NaN
+			logVZ	NaN
+			logCZ	NaN
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+	iteration	18
+		train
+			logZ	-5.639
+			logVZ	-7.934
+			logCZ	-2.295
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		test
+			logZ	-5.577
+			logVZ	-7.873
+			logCZ	-2.295
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		current.test
+			logZ	NaN
+			logVZ	NaN
+			logCZ	NaN
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+	iteration	19
+		train
+			logZ	-5.639
+			logVZ	-7.934
+			logCZ	-2.295
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		test
+			logZ	-5.577
+			logVZ	-7.873
+			logCZ	-2.295
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+		current.test
+			logZ	NaN
+			logVZ	NaN
+			logCZ	NaN
+			elogZ	NaN
+			entropy	NaN
+			objective	NaN
+			accuracy	NaN
+	train
+		logZ	-5.639
+		logVZ	-7.934
+		logCZ	-2.295
+		elogZ	NaN
+		entropy	NaN
+		objective	NaN
+		accuracy	NaN
+	test
+		logZ	-5.577
+		logVZ	-7.873
+		logCZ	-2.295
+		elogZ	NaN
+		entropy	NaN
+		objective	NaN
+		accuracy	NaN

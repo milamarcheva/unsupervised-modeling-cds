@@ -1,0 +1,3 @@
+createHypergraph	8m36s (0.0s x 6556290)
+computePosteriors	2m18s (0.0s x 6556290)
+fetchPosteriors	39s (0.0s x 5904900)

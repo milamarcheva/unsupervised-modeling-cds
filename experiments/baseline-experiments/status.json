@@ -1,0 +1,26 @@
+{
+  "status": "complete",
+  "pid": 96457,
+  "started": "2026-10-04T12:32:42+0100",
+  "languages": {
+    "en": "complete",
+    "bg": "complete"
+  },
+  "checkpoints": {
+    "en": [
+      1,
+      5,
+      10,
+      20
+    ],
+    "bg": [
+      1,
+      5,
+      10,
+      20
+    ]
+  },
+  "active_language": "bg",
+  "child_pid": 96587,
+  "finished": "2026-10-04T13:02:49+0100"
+}

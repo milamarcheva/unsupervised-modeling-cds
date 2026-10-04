@@ -1,0 +1,21 @@
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{llrrrrr}
+\hline
+Language & Passes & States & Train $\log Z$ & M2O (\%) & O2O (\%) & VI \\
+\hline
+English & 1 & 10 & -5.661 & 32.14 & 26.52 & 4.331 \\
+English & 5 & 10 & -5.640 & 32.12 & 27.65 & 4.077 \\
+English & 10 & 10 & -5.639 & 32.12 & 27.83 & 3.991 \\
+English & 20 & 10 & -5.639 & 31.12 & 25.75 & 3.863 \\
+\hline
+Bulgarian & 1 & 8 & -6.731 & 31.57 & 23.23 & 4.930 \\
+Bulgarian & 5 & 8 & -6.668 & 31.57 & 25.16 & 4.751 \\
+Bulgarian & 10 & 8 & -6.666 & 31.57 & 25.16 & 4.717 \\
+Bulgarian & 20 & 8 & -6.666 & 31.66 & 25.07 & 4.641 \\
+\hline
+\end{tabular}
+\caption{HMM baseline performance after repeated passes through the same morphemically tokenised training corpus. Minibatch size is one utterance and initialisation seed is 1 throughout. The one-pass rows retain the original baseline results; subsequent rows use checkpoints from a matched 20-pass run for each language. Training $\log Z$, the primary metric, is the token-normalised score recorded by the toolkit during the last reported online-EM pass; it is not a separate rescore of the training corpus with parameters fixed at the checkpoint. M2O and O2O denote many-to-one and one-to-one accuracy on the annotated evaluation data. Higher training $\log Z$ and accuracies, and lower variation of information (VI, in bits), are better.}
+\label{tab:hmm_iteration_baselines}
+\end{table}

@@ -1,0 +1,45 @@
+{
+  "reported_checkpoints": [
+    {
+      "language": "en",
+      "passes": 5,
+      "reported_at": "2026-10-04T12:38:49+0100"
+    },
+    {
+      "language": "en",
+      "passes": 10,
+      "reported_at": "2026-10-04T12:53:22+0100"
+    },
+    {
+      "language": "en",
+      "passes": 20,
+      "reported_at": "2026-10-04T12:53:22+0100"
+    },
+    {
+      "language": "bg",
+      "passes": 5,
+      "reported_at": "2026-10-04T12:53:22+0100"
+    },
+    {
+      "language": "bg",
+      "passes": 10,
+      "reported_at": "2026-10-04T12:59:19+0100"
+    },
+    {
+      "language": "bg",
+      "passes": 20,
+      "reported_at": "2026-10-04T13:08:36+0100"
+    }
+  ],
+  "reported_failures": [
+    {
+      "started": "2026-10-04T11:48:21+0100",
+      "pid": 96018,
+      "error": "en: first pass does not reproduce the original baseline; comparison paused"
+    }
+  ],
+  "final_table_reported": true,
+  "note": "The initial strict token-matching check and correction were reported in chat on 2026-10-04. Notify new successful checkpoints or new failures. A later failure with a different run start or process ID is a new event even if its error text repeats.",
+  "final_table_reported_at": "2026-10-04T13:08:36+0100",
+  "monitor_status": "PAUSED"
+}

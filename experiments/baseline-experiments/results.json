@@ -1,0 +1,62 @@
+{
+  "en": {
+    "1": {
+      "many_to_one": 0.3213794368522425,
+      "one_to_one": 0.26524809685407685,
+      "vi": 4.33051207769031,
+      "vi_norm": 0.9177412893578405,
+      "source": "original_saved_baseline"
+    },
+    "5": {
+      "many_to_one": 0.3211960011006145,
+      "one_to_one": 0.27652939557919837,
+      "vi": 4.077073412631276,
+      "vi_norm": 0.9257994741417855,
+      "source": "runs/en_20passes.out/stage2.current.test.pred.4"
+    },
+    "10": {
+      "many_to_one": 0.3211960011006145,
+      "one_to_one": 0.2782720352196643,
+      "vi": 3.9911072836144954,
+      "vi_norm": 0.9241298555866413,
+      "source": "runs/en_20passes.out/stage2.current.test.pred.9"
+    },
+    "20": {
+      "many_to_one": 0.31119875263688895,
+      "one_to_one": 0.2575437952857012,
+      "vi": 3.862955769674588,
+      "vi_norm": 0.9350327005605907,
+      "source": "runs/en_20passes.out/stage2.current.test.pred.19"
+    }
+  },
+  "bg": {
+    "1": {
+      "many_to_one": 0.31572327044025156,
+      "one_to_one": 0.23228511530398324,
+      "vi": 4.930471643876098,
+      "vi_norm": 0.9260633544068569,
+      "source": "original_saved_baseline"
+    },
+    "5": {
+      "many_to_one": 0.31572327044025156,
+      "one_to_one": 0.25157232704402516,
+      "vi": 4.751051517330538,
+      "vi_norm": 0.9122490485309815,
+      "source": "runs/bg_20passes.out/stage2.current.test.pred.4"
+    },
+    "10": {
+      "many_to_one": 0.31572327044025156,
+      "one_to_one": 0.25157232704402516,
+      "vi": 4.716540613509779,
+      "vi_norm": 0.9107658472557076,
+      "source": "runs/bg_20passes.out/stage2.current.test.pred.9"
+    },
+    "20": {
+      "many_to_one": 0.3165618448637317,
+      "one_to_one": 0.2507337526205451,
+      "vi": 4.640638403419721,
+      "vi_norm": 0.9079972576158483,
+      "source": "runs/bg_20passes.out/stage2.current.test.pred.19"
+    }
+  }
+}
